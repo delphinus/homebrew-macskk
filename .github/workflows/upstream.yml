@@ -44,7 +44,7 @@ jobs:
           # this lands on main; the cask is unusable in between, which is fine
           # because that only lasts as long as the merge.
           sed -i "s|^  version \".*\"$|  version \"$latest,1\"|" "$cask"
-          sed -i "0,/^  sha256 \"/s|^  sha256 \".*\"|  sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"|" "$cask"
+          sed -i "s|^  sha256 \".*\"|  sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"|" "$cask"
           git diff -- "$cask"
 
           git config user.name 'github-actions[bot]'

@@ -114,7 +114,9 @@ jobs:
         run: |
           set -euo pipefail
           sha="$(shasum -a 256 macSKK.app.zip | cut -d' ' -f1)"
-          sed -i '' "0,/^  sha256 \"/s|^  sha256 \".*\"|  sha256 \"$sha\"|" Casks/macskk-kakutei-undo.rb
+          # NOTE: BSD sed silently ignores the GNU-only `0,/re/` address form, so
+          # match the single sha256 line directly.
+          sed -i '' "s|^  sha256 \".*\"|  sha256 \"$sha\"|" Casks/macskk-kakutei-undo.rb
           if git diff --quiet; then
             echo 'cask unchanged, nothing to commit'
             exit 0
