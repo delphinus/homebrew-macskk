@@ -1,0 +1,125 @@
+name: Build
+
+on:
+  pull_request:
+    paths:
+      - Casks/**
+      - patches/**
+      - .github/workflows/build.yml
+  push:
+    branches:
+      - main
+    paths:
+      - Casks/**
+      - patches/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # NOTE: macos-26 is the arm64 image, the same one upstream's test.yml uses.
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read the version out of the cask
+        id: cask
+        run: |
+          set -euo pipefail
+          version="$(sed -n 's/^  version "\(.*\)"$/\1/p' Casks/macskk-kakutei-undo.rb)"
+          upstream="${version%%,*}"
+          revision="${version##*,}"
+          echo "upstream=$upstream" >> "$GITHUB_OUTPUT"
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+          echo "tag=v$upstream-$revision" >> "$GITHUB_OUTPUT"
+          echo "upstream=$upstream revision=$revision"
+
+      - name: Check out upstream at that release
+        uses: actions/checkout@v5
+        with:
+          repository: mtgto/macSKK
+          ref: ${{ steps.cask.outputs.upstream }}
+          path: macSKK
+
+      # NOTE: This is where a patch that no longer applies shows up, which is
+      # why this job also runs on pull_request. --3way gives a usable rejection
+      # instead of a bare "does not apply".
+      - name: Apply the patch
+        working-directory: macSKK
+        run: git apply --3way --verbose ../patches/kakutei-undo.patch
+
+      - name: Select Xcode
+        run: sudo xcode-select -s '/Applications/Xcode_26.6.app/Contents/Developer'
+
+      - name: Test
+        working-directory: macSKK
+        run: |
+          xcodebuild test -project macSKK.xcodeproj -scheme macSKK \
+            -destination 'platform=macOS' \
+            CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=YES \
+            -quiet
+
+      # NOTE: ad-hoc signing. There is no Developer ID certificate here, so the
+      # cask drops the quarantine flag in its postflight instead.
+      # MARKETING_VERSION stays at the upstream number so macSKK's own update
+      # check does not nag; this tap is what delivers updates.
+      - name: Build
+        working-directory: macSKK
+        run: |
+          xcodebuild -project macSKK.xcodeproj -scheme macSKK -configuration Release \
+            MARKETING_VERSION='${{ steps.cask.outputs.upstream }}' \
+            CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=YES CODE_SIGNING_ALLOWED=YES \
+            clean archive -archivePath build/archive.xcarchive
+
+      - name: Pack
+        run: |
+          set -euo pipefail
+          app='macSKK/build/archive.xcarchive/Products/Library/Input Methods/macSKK.app'
+          codesign -dv "$app" 2>&1 | grep -E 'Signature|Identifier' || true
+          # NOTE: ditto keeps the code signature and the bundle structure intact.
+          ditto -c -k --keepParent "$app" macSKK.app.zip
+          shasum -a 256 macSKK.app.zip
+
+      - name: Upload the build for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: macSKK.app.zip
+          path: macSKK.app.zip
+
+      - name: Publish the release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.cask.outputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 ||
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" \
+              --notes "macSKK ${{ steps.cask.outputs.upstream }} with patches/kakutei-undo.patch (revision ${{ steps.cask.outputs.revision }}), built ad-hoc signed."
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber macSKK.app.zip
+
+      - name: Write the checksum back into the cask
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha="$(shasum -a 256 macSKK.app.zip | cut -d' ' -f1)"
+          sed -i '' "0,/^  sha256 \"/s|^  sha256 \".*\"|  sha256 \"$sha\"|" Casks/macskk-kakutei-undo.rb
+          if git diff --quiet; then
+            echo 'cask unchanged, nothing to commit'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am 'macSKK ${{ steps.cask.outputs.upstream }}-${{ steps.cask.outputs.revision }}: update sha256 [skip ci]'
+          git push origin HEAD:main

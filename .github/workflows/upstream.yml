@@ -1,0 +1,73 @@
+name: Upstream
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Bump the cask if upstream has a newer release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          cask=Casks/macskk-kakutei-undo.rb
+          version="$(sed -n 's/^  version "\(.*\)"$/\1/p' "$cask")"
+          current="${version%%,*}"
+          latest="$(gh release view --repo mtgto/macSKK --json tagName --jq '.tagName')"
+          echo "current=$current latest=$latest"
+
+          if [ "$current" = "$latest" ]; then
+            echo 'already up to date'
+            exit 0
+          fi
+
+          branch="macskk-$latest"
+          if gh api "repos/$GITHUB_REPOSITORY/branches/$branch" >/dev/null 2>&1; then
+            echo "branch $branch already exists"
+            exit 0
+          fi
+
+          # NOTE: A new upstream release resets the patch revision to 1. The
+          # sha256 is a placeholder until build.yml writes the real one after
+          # this lands on main; the cask is unusable in between, which is fine
+          # because that only lasts as long as the merge.
+          sed -i "s|^  version \".*\"$|  version \"$latest,1\"|" "$cask"
+          sed -i "0,/^  sha256 \"/s|^  sha256 \".*\"|  sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"|" "$cask"
+          git diff -- "$cask"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git commit -am "macSKK $latest"
+          git push origin "$branch"
+
+          gh pr create --base main --head "$branch" \
+            --title "macSKK $latest" \
+            --body "$(cat <<EOF
+          Upstream released [$latest](https://github.com/mtgto/macSKK/releases/tag/$latest).
+
+          The CI on this PR applies \`patches/kakutei-undo.patch\` to that tag and
+          builds it, so **if the patch no longer applies, this is where it shows
+          up**. Regenerate it from the \`fix-candidate-panel\` branch of
+          [delphinus/macSKK](https://github.com/delphinus/macSKK):
+
+          \`\`\`sh
+          git diff $latest..fix-candidate-panel > patches/kakutei-undo.patch
+          \`\`\`
+
+          Merging this triggers \`build.yml\`, which publishes the app to a
+          release and writes the checksum back to main.
+          EOF
+          )"
