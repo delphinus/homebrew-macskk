@@ -34,7 +34,11 @@ cask "macskk-kakutei-undo" do
     "~/Library/Containers/net.mtgto.inputmethod.macSKK",
   ]
 
-  preflight_steps do
+  # NOTE: brew asks for preflight_steps / postflight_steps instead, but the
+  # declarative DSL has no way to abort an install and no system_command, so
+  # neither the guard below nor the de-quarantine can be expressed there.
+  # Keep the Ruby blocks until they actually stop working.
+  preflight do
     # NOTE: conflicts_with only sees casks brew knows about. A hand-built app
     # copied into /Library/Input Methods is invisible to brew and is exactly
     # what breaks input: TIS launches an input method by bundle identifier, so
@@ -57,7 +61,7 @@ cask "macskk-kakutei-undo" do
     end
   end
 
-  postflight_steps do
+  postflight do
     # NOTE: This app is ad-hoc signed (no Developer ID), and casks quarantine
     # what they download. Drop the flag so TIS can load it.
     installed = File.expand_path("~/Library/Input Methods/macSKK.app")
