@@ -27,6 +27,19 @@ brew install delphinus/macskk/macskk-kakutei-undo
 - main に入ると [`build.yml`](.github/workflows/build.yml) が `macos-26` でビルドして release に上げ、cask に sha256 を書き戻す。
 - バージョンは `<upstream のリリース>,<パッチの版>`。パッチだけ直したいときは後ろを上げる。アプリの `MARKETING_VERSION` は upstream の番号のままにしてあるので、macSKK 自身の更新通知は静かなまま。
 
+## パッチを直したとき
+
+[delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel` を直したら、この tap にも持ってくる。
+
+```sh
+cd <macSKK のチェックアウト>
+git diff 2.20.0..fix-candidate-panel > <この tap>/patches/kakutei-undo.patch
+```
+
+そのうえで `Casks/macskk-kakutei-undo.rb` の `version` の**カンマの後ろを 1 つ上げる** (`"2.20.0,1"` → `"2.20.0,2"`)。upstream のリリースは変わっていないので前半は据え置き。
+
+main に push すると `build.yml` がビルドして release を作り、sha256 を書き戻す。`sha256` は触らなくてよい (どうせ上書きされる)。**ビルドのたびに zip のハッシュは変わる**ので、`Casks/**` や `patches/**` を触るときは版も一緒に上げること。上げずに push すると、既存の release を新しい zip で上書きしてから sha256 を書き戻すまでのあいだ、`brew install` がハッシュ不一致で落ちる。
+
 ## 二重に入れない
 
 macOS は入力メソッドを **bundle identifier で起動する**ので、`/Library/Input Methods` と `~/Library/Input Methods` の両方に macSKK があると**どちらが起動するか分からなくなる**。起動したほうが IMK のセッションを張れないと、キー入力が丸ごと握り潰されて「キーボードが反応しない」ように見える。
