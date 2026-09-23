@@ -5,13 +5,12 @@ cask "macskk-kakutei-undo" do
   version "2.20.0,1"
   sha256 "f30eeb3abbd0bada40bb626b6c840aaabd66a2b797b4fbb42bdd6dfdd1795ca2"
 
-  url "https://github.com/delphinus/homebrew-macskk/releases/download/v#{version.before_comma}-#{version.after_comma}/macSKK.app.zip",
-      verified: "github.com/delphinus/homebrew-macskk/"
+  url "https://github.com/delphinus/homebrew-macskk/releases/download/v#{version.before_comma}-#{version.after_comma}/macSKK.app.zip"
   name "macSKK with kakutei undo"
   desc "Japanese input method (SKK) with a kakutei undo patch that is not upstream yet"
   homepage "https://github.com/mtgto/macSKK"
 
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
   # NOTE: The official cask installs the same bundle identifier into
   # /Library/Input Methods via a pkg. Two copies make macOS launch the wrong one.
   conflicts_with cask: "macskk"
