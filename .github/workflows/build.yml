@@ -68,7 +68,7 @@ jobs:
             -quiet
 
       # NOTE: ad-hoc signing. There is no Developer ID certificate here, so the
-      # cask drops the quarantine flag in its postflight instead.
+      # cask drops the quarantine flag in its postflight_steps instead.
       # MARKETING_VERSION stays at the upstream number so macSKK's own update
       # check does not nag; this tap is what delivers updates.
       - name: Build

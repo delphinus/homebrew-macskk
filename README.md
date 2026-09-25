@@ -49,7 +49,7 @@ macOS は入力メソッドを **bundle identifier で起動する**ので、`/L
 | | |
 |---|---|
 | `conflicts_with cask: "macskk"` | 公式 cask が入っていれば brew が拒む |
-| `preflight` | `/Library/Input Methods/macSKK.app` が実在すれば中断する。**手で置いたビルドは brew から見えない**ので、ファイルの有無で見る |
+| `preflight_steps` | `/Library/Input Methods/macSKK.app` が実在すれば中断する。**手で置いたビルドは brew から見えない**ので、ファイルの有無で見る |
 | README のこの節 | 片付け方 |
 
 初回だけ sudo が要る:
@@ -73,6 +73,6 @@ LSREG=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchService
 
 ## 制限
 
-- **ad-hoc 署名。** Developer ID の証明書を持っていないため。cask は落としてきたものに quarantine を付けるので、`postflight` で外している。
+- **ad-hoc 署名。** Developer ID の証明書を持っていないため。cask は落としてきたものに quarantine を付けるので、`postflight_steps` で外している。
 - **macOS / Apple Silicon 向けにしかビルドしていない。**
 - 辞書・skkserv の設定・コンテナは bundle identifier が同じなので公式版と共通。置き場所を変えても引き継がれる。

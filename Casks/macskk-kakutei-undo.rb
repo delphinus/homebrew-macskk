@@ -33,40 +33,46 @@ cask "macskk-kakutei-undo" do
     "~/Library/Containers/net.mtgto.inputmethod.macSKK",
   ]
 
-  # NOTE: brew asks for preflight_steps / postflight_steps instead, but the
-  # declarative DSL has no way to abort an install and no system_command, so
-  # neither the guard below nor the de-quarantine can be expressed there.
-  # Keep the Ruby blocks until they actually stop working.
-  preflight do
+  preflight_steps do
     # NOTE: conflicts_with only sees casks brew knows about. A hand-built app
     # copied into /Library/Input Methods is invisible to brew and is exactly
     # what breaks input: TIS launches an input method by bundle identifier, so
     # with two registrations it can pick the other one and swallow every key.
-    system_installed = "/Library/Input Methods/macSKK.app"
-    if File.exist?(system_installed)
-      odie <<~EOS
-        #{system_installed} already exists.
+    if_path_exists "/Library/Input Methods/macSKK.app" do
+      warn <<~EOS
+        /Library/Input Methods/macSKK.app already exists.
 
         macOS launches an input method by its bundle identifier, so having
         macSKK in both /Library/Input Methods and ~/Library/Input Methods makes
         it launch an unpredictable one. Remove the system-wide copy first:
 
             brew uninstall --cask macskk     # if it came from the official cask
-            sudo rm -rf "#{system_installed}"
+            sudo rm -rf "/Library/Input Methods/macSKK.app"
 
         Then re-run this install and add the input source again in
         System Settings > Keyboard > Input Sources.
       EOS
+      # NOTE: the steps DSL has no odie, and a failing command is the only way
+      # to abort. Spell the condition out so the error names the path even
+      # after the warning above has scrolled away. (`brew style` does not list
+      # `warn` as a step, but the runner supports it.)
+      run "/bin/test", args: ["!", "-e", "/Library/Input Methods/macSKK.app"]
     end
   end
 
-  postflight do
+  # NOTE: the steps DSL has no token for input_methoddir, and `~` in a step
+  # expands against the sandbox's fake home, so resolve the install target
+  # while this is still plain Ruby. `brew style` wants literal arguments here,
+  # but a literal cannot name the home directory.
+  installed_app = "#{cask.config.input_methoddir}/macSKK.app"
+
+  postflight_steps do
     # NOTE: This app is ad-hoc signed (no Developer ID), and casks quarantine
     # what they download. Drop the flag so TIS can load it.
-    installed = File.expand_path("~/Library/Input Methods/macSKK.app")
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", installed],
-                   must_succeed: false
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", installed_app],
+        writable_paths: [installed_app],
+        must_succeed:   false
   end
 
   caveats <<~EOS
