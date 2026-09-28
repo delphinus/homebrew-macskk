@@ -890,10 +890,22 @@ index 0000000..80afab3
 +    }
 +}
 diff --git a/macSKKTests/StateMachineTests.swift b/macSKKTests/StateMachineTests.swift
-index 3953859..24d3e99 100644
+index 3953859..41507b7 100644
 --- a/macSKKTests/StateMachineTests.swift
 +++ b/macSKKTests/StateMachineTests.swift
-@@ -2795,6 +2795,579 @@ final class StateMachineTests: XCTestCase {
+@@ -7,7 +7,11 @@ import XCTest
+ @testable import macSKK
+ 
+ final class StateMachineTests: XCTestCase {
++    /// 確定のやり直しのテストはStateMachineTestContextを使わずに直接イベントを購読するので、その購読を持っておく
++    var cancellables: Set<AnyCancellable> = []
++
+     override func setUp() async throws {
++        cancellables = []
+         await MainActor.run {
+             Global.dictionary.setEntries([:])
+             Global.privateMode.send(false)
+@@ -2795,6 +2799,579 @@ final class StateMachineTests: XCTestCase {
          XCTAssertEqual(Global.dictionary.recentRegisteredCandidates.first, RecentRegisteredCandidate(yomi: "い", word: Word("伊")))
      }
  
@@ -1473,7 +1485,7 @@ index 3953859..24d3e99 100644
      // Ctrl-jを押した
      var hiraganaAction: Action {
          Action(keyBind: .hiragana, event: generateNSEvent(character: "j", characterIgnoringModifiers: "j", modifierFlags: .control))
-@@ -2896,7 +3469,7 @@ final class StateMachineTests: XCTestCase {
+@@ -2896,7 +3473,7 @@ final class StateMachineTests: XCTestCase {
          printableKeyEventAction(character: char, characterIgnoringModifier: base, withShift: true)
      }
  
@@ -1482,7 +1494,7 @@ index 3953859..24d3e99 100644
          let characterIgnoringModifiers = characterIgnoringModifier ?? character
          if withShift {
              if let characterIgnoringModifier {
-@@ -2904,12 +3477,14 @@ final class StateMachineTests: XCTestCase {
+@@ -2904,12 +3481,14 @@ final class StateMachineTests: XCTestCase {
                      keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
                      event: generateNSEvent(character: character,
                                             characterIgnoringModifiers: characterIgnoringModifier,
@@ -1499,7 +1511,7 @@ index 3953859..24d3e99 100644
                  )
              }
          } else {
-@@ -2917,7 +3492,8 @@ final class StateMachineTests: XCTestCase {
+@@ -2917,7 +3496,8 @@ final class StateMachineTests: XCTestCase {
                  keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
                  event: generateNSEvent(
                      character: character,
@@ -1509,7 +1521,7 @@ index 3953859..24d3e99 100644
              )
          }
      }
-@@ -3089,3 +3665,10 @@ fileprivate extension InputMethodEvent {
+@@ -3089,3 +3669,10 @@ fileprivate extension InputMethodEvent {
          candidateBuffer.removeAll()
      }
  }
