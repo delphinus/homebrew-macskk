@@ -17,7 +17,7 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 キーバインドのアクション名は `kakuteiUndo`、既定は ⌃Z。macOS の標準のキーバインドでも macSKK の他の機能でも使われていない。
 
-パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel` ブランチ。**upstream に提案して取り込まれたらこの tap は畳む。**
+パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel-2.21.0` ブランチ (upstream の main に rebase したもの)。**upstream に提案して取り込まれたらこの tap は畳む。**
 
 ## 仕組み
 
@@ -29,16 +29,31 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 ## パッチを直したとき
 
-[delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel` を直したら、この tap にも持ってくる。
+[delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel-2.21.0` を直したら、この tap にも持ってくる。
 
 ```sh
 cd <macSKK のチェックアウト>
-git diff 2.20.0..fix-candidate-panel > <この tap>/patches/kakutei-undo.patch
+git diff 2.21.0..fix-candidate-panel-2.21.0 > <この tap>/patches/kakutei-undo.patch
 ```
 
-そのうえで `Casks/macskk-kakutei-undo.rb` の `version` の**カンマの後ろを 1 つ上げる** (`"2.20.0,1"` → `"2.20.0,2"`)。upstream のリリースは変わっていないので前半は据え置き。
+そのうえで `Casks/macskk-kakutei-undo.rb` の `version` の**カンマの後ろを 1 つ上げる** (`"2.21.0,1"` → `"2.21.0,2"`)。upstream のリリースは変わっていないので前半は据え置き。
 
 main に push すると `build.yml` がビルドして release を作り、sha256 を書き戻す。`sha256` は触らなくてよい (どうせ上書きされる)。**ビルドのたびに zip のハッシュは変わる**ので、`Casks/**` や `patches/**` を触るときは版も一緒に上げること。上げずに push すると、既存の release を新しい zip で上書きしてから sha256 を書き戻すまでのあいだ、`brew install` がハッシュ不一致で落ちる。
+
+## upstream に新しいリリースが出たとき
+
+`upstream.yml` が作る PR の CI でパッチが当たらなければ、パッチのブランチを新しいリリースに rebase して作り直す。**`git diff <新しいタグ>..<ブランチ>` は rebase してから取る。** 古いリリースの上にあるブランチとの差分を取ると、上流の変更を打ち消す差分までパッチに入ってしまう。
+
+```sh
+cd <macSKK のチェックアウト>
+git fetch origin --tags
+git switch -c fix-candidate-panel-<新しいタグ> fix-candidate-panel-2.21.0
+git rebase <新しいタグ>
+git diff <新しいタグ>..HEAD > <この tap>/patches/kakutei-undo.patch
+git push fork HEAD
+```
+
+作り直したパッチを PR のブランチに push すれば CI がもう一度走る。ブランチ名が変わるので、この README の参照も合わせて直す。
 
 ## 二重に入れない
 

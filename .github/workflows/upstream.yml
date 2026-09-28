@@ -72,12 +72,10 @@ jobs:
 
           The CI on this PR applies \`patches/kakutei-undo.patch\` to that tag and
           builds it, so **if the patch no longer applies, this is where it shows
-          up**. Regenerate it from the \`fix-candidate-panel\` branch of
-          [delphinus/macSKK](https://github.com/delphinus/macSKK):
-
-          \`\`\`sh
-          git diff $latest..fix-candidate-panel > patches/kakutei-undo.patch
-          \`\`\`
+          up**. Rebase the patch branch of
+          [delphinus/macSKK](https://github.com/delphinus/macSKK) (named in
+          README.md) onto $latest and regenerate the patch from it; see
+          "upstream に新しいリリースが出たとき" in README.md.
 
           Merging this triggers \`build.yml\`, which publishes the app to a
           release and writes the checksum back to main.
