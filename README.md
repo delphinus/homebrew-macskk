@@ -53,7 +53,7 @@ git diff <新しいタグ>..HEAD > <この tap>/patches/kakutei-undo.patch
 git push fork HEAD
 ```
 
-作り直したパッチを PR のブランチに push すれば CI がもう一度走る。ブランチ名が変わるので、この README の参照も合わせて直す。
+作り直したパッチを PR のブランチに push すれば CI がやり直される。ブランチ名が変わるので、この README の参照も合わせて直す。
 
 ## 二重に入れない
 
