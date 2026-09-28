@@ -1,8 +1,8 @@
 diff --git a/macSKK.xcodeproj/project.pbxproj b/macSKK.xcodeproj/project.pbxproj
-index 3be99ef..0df915e 100644
+index 5ad75cf..4e463ba 100644
 --- a/macSKK.xcodeproj/project.pbxproj
 +++ b/macSKK.xcodeproj/project.pbxproj
-@@ -133,6 +133,7 @@
+@@ -138,6 +138,7 @@
  		CEA602AE2F03795D00E605F2 /* ColorEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA602AD2F03795D00E605F2 /* ColorEncoding.swift */; };
  		CEA602B02F264FC600E605F2 /* KanaRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA602AF2F264FC600E605F2 /* KanaRuleView.swift */; };
  		CEA78FAA295EBCAC00B67E25 /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */; };
@@ -10,7 +10,7 @@ index 3be99ef..0df915e 100644
  		CEA78FAC2960401F00B67E25 /* String+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAB2960401F00B67E25 /* String+Transform.swift */; };
  		CEA78FAE2961BA1D00B67E25 /* String+TransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAD2961BA1D00B67E25 /* String+TransformTests.swift */; };
  		CEA78FB02964209B00B67E25 /* UserDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAF2964209B00B67E25 /* UserDict.swift */; };
-@@ -350,6 +351,7 @@
+@@ -362,6 +363,7 @@
  		CEA602AD2F03795D00E605F2 /* ColorEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEncoding.swift; sourceTree = "<group>"; };
  		CEA602AF2F264FC600E605F2 /* KanaRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaRuleView.swift; sourceTree = "<group>"; };
  		CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
@@ -18,7 +18,7 @@ index 3be99ef..0df915e 100644
  		CEA78FAB2960401F00B67E25 /* String+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Transform.swift"; sourceTree = "<group>"; };
  		CEA78FAD2961BA1D00B67E25 /* String+TransformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TransformTests.swift"; sourceTree = "<group>"; };
  		CEA78FAF2964209B00B67E25 /* UserDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDict.swift; sourceTree = "<group>"; };
-@@ -619,6 +621,7 @@
+@@ -641,6 +643,7 @@
  				CEE748812FA6388A00818B33 /* MarkedTextTests.swift */,
  				CEF0823529685C0800646366 /* StateTests.swift */,
  				CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */,
@@ -26,7 +26,7 @@ index 3be99ef..0df915e 100644
  				CEE2D9782A99FEC700A4CD76 /* CandidateTest.swift */,
  				CE4CB5CD2AD55DF90046FA34 /* NumberEntryTests.swift */,
  				CE84A3EC295DA818009394C4 /* MemoryDictTests.swift */,
-@@ -1136,6 +1139,7 @@
+@@ -1168,6 +1171,7 @@
  				CEAB00012E228E2000618E64 /* SKKServDestinationTests.swift in Sources */,
  				CEADA44D2B025A8A0026E2BD /* EntryTests.swift in Sources */,
  				CEA78FAA295EBCAC00B67E25 /* StateMachineTests.swift in Sources */,
@@ -123,7 +123,7 @@ index 7722b19..07dd97f 100644
                  return KeyBinding(action, [Input(key: .character("."), modifierFlags: .shift)])
              case .eisu:
 diff --git a/macSKK/StateMachine.swift b/macSKK/StateMachine.swift
-index 2772b9e..5c15a99 100644
+index 61708b0..a79c2f9 100644
 --- a/macSKK/StateMachine.swift
 +++ b/macSKK/StateMachine.swift
 @@ -3,6 +3,7 @@
@@ -559,7 +559,7 @@ index 2772b9e..5c15a99 100644
      /**
       * 状態がnormalのときのprintableイベントのhandle
       *
-@@ -1069,7 +1453,7 @@ final class StateMachine {
+@@ -1073,7 +1457,7 @@ final class StateMachine {
              }
          case .up, .down, .registerPaste, .eisu, .kana, .toggleKana, .reconvert:
              return true
@@ -568,7 +568,7 @@ index 2772b9e..5c15a99 100644
              break
          }
  
-@@ -1358,6 +1742,23 @@ final class StateMachine {
+@@ -1362,6 +1746,23 @@ final class StateMachine {
              } else {
                  state.inputMethod = .normal
                  addFixedText(fixedText)
@@ -592,7 +592,7 @@ index 2772b9e..5c15a99 100644
                  if let prevMode = selecting.prev.composing.prevMode {
                      state.inputMode = prevMode
                      inputMethodEventSubject.send(.modeChanged(prevMode))
-@@ -1515,7 +1916,7 @@ final class StateMachine {
+@@ -1519,7 +1920,7 @@ final class StateMachine {
              return handle(action)
          case .registerPaste, .delete, .eisu, .kana, .reconvert:
              return true
@@ -601,7 +601,7 @@ index 2772b9e..5c15a99 100644
              break
          case nil:
              break
-@@ -1647,6 +2048,8 @@ final class StateMachine {
+@@ -1651,6 +2052,8 @@ final class StateMachine {
      ///   - 状態がUnregister (ユーザー辞書から削除するか質問中)
      ///     - 空文字列で確定する
      @MainActor func commitComposition() {
@@ -610,7 +610,7 @@ index 2772b9e..5c15a99 100644
          if state.specialState != nil {
              state.inputMethod = .normal
              state.specialState = nil
-@@ -1669,6 +2072,9 @@ final class StateMachine {
+@@ -1673,6 +2076,9 @@ final class StateMachine {
      }
  
      private func addFixedText(_ text: String) {
@@ -620,7 +620,7 @@ index 2772b9e..5c15a99 100644
          if let specialState = state.specialState {
              // state.markedTextを更新してinputMethodEventSubjectにstate.displayText()をsendする
              state.specialState = specialState.appendText(text)
-@@ -1711,7 +2117,11 @@ final class StateMachine {
+@@ -1715,7 +2121,11 @@ final class StateMachine {
      }
  
      /// 現在の変換候補選択状態をcandidateEventSubject.sendする
@@ -633,7 +633,7 @@ index 2772b9e..5c15a99 100644
          if let selecting {
              if selecting.candidateIndex < inlineCandidateCount {
                  candidateEventSubject.send(
-@@ -1777,13 +2187,20 @@ final class StateMachine {
+@@ -1781,13 +2191,20 @@ final class StateMachine {
      }
  
      /// StateMachine外で選択されている変換候補が更新されたときに通知される
@@ -655,7 +655,7 @@ index 2772b9e..5c15a99 100644
          }
      }
  
-@@ -1794,6 +2211,9 @@ final class StateMachine {
+@@ -1798,6 +2215,9 @@ final class StateMachine {
              updateCandidates(selecting: nil)
              state.inputMethod = .normal
              addFixedText(candidate.word)
@@ -666,10 +666,10 @@ index 2772b9e..5c15a99 100644
      }
  }
 diff --git a/macSKK/en.lproj/Localizable.strings b/macSKK/en.lproj/Localizable.strings
-index 1d96f7e..e921883 100644
+index dd568a5..00d2812 100644
 --- a/macSKK/en.lproj/Localizable.strings
 +++ b/macSKK/en.lproj/Localizable.strings
-@@ -173,6 +173,7 @@
+@@ -174,6 +174,7 @@
  "KeyBindingActionUnregister" = "Unregister selected candidate";
  "KeyBindingActionRegisterpaste" = "Paste on register";
  "KeyBindingActionReconvert" = "Reconvert selected text";
@@ -678,10 +678,10 @@ index 1d96f7e..e921883 100644
  "KeyBindingActionEisu" = "Eisu Key";
  "KeyBindingActionKana" = "Kana Key";
 diff --git a/macSKK/ja.lproj/Localizable.strings b/macSKK/ja.lproj/Localizable.strings
-index 87e0b72..055921e 100644
+index 9d3c023..526e08a 100644
 --- a/macSKK/ja.lproj/Localizable.strings
 +++ b/macSKK/ja.lproj/Localizable.strings
-@@ -173,6 +173,7 @@
+@@ -174,6 +174,7 @@
  "KeyBindingActionUnregister" = "選択中の変換候補の削除";
  "KeyBindingActionRegisterpaste" = "登録モードでペースト";
  "KeyBindingActionReconvert" = "選択テキストを再変換";
@@ -890,10 +890,10 @@ index 0000000..80afab3
 +    }
 +}
 diff --git a/macSKKTests/StateMachineTests.swift b/macSKKTests/StateMachineTests.swift
-index 4a76452..252b1b8 100644
+index 3953859..24d3e99 100644
 --- a/macSKKTests/StateMachineTests.swift
 +++ b/macSKKTests/StateMachineTests.swift
-@@ -4570,6 +4570,579 @@ final class StateMachineTests: XCTestCase {
+@@ -2795,6 +2795,579 @@ final class StateMachineTests: XCTestCase {
          XCTAssertEqual(Global.dictionary.recentRegisteredCandidates.first, RecentRegisteredCandidate(yomi: "い", word: Word("伊")))
      }
  
@@ -1473,8 +1473,8 @@ index 4a76452..252b1b8 100644
      // Ctrl-jを押した
      var hiraganaAction: Action {
          Action(keyBind: .hiragana, event: generateNSEvent(character: "j", characterIgnoringModifiers: "j", modifierFlags: .control))
-@@ -4666,7 +5239,7 @@ final class StateMachineTests: XCTestCase {
-         Action(keyBind: .reconvert, event: generateNSEvent(character: "/", characterIgnoringModifiers: "/", modifierFlags: [.control]))
+@@ -2896,7 +3469,7 @@ final class StateMachineTests: XCTestCase {
+         printableKeyEventAction(character: char, characterIgnoringModifier: base, withShift: true)
      }
  
 -    private func printableKeyEventAction(character: Character, characterIgnoringModifier: Character? = nil, withShift: Bool = false) -> Action {
@@ -1482,7 +1482,7 @@ index 4a76452..252b1b8 100644
          let characterIgnoringModifiers = characterIgnoringModifier ?? character
          if withShift {
              if let characterIgnoringModifier {
-@@ -4674,12 +5247,14 @@ final class StateMachineTests: XCTestCase {
+@@ -2904,12 +3477,14 @@ final class StateMachineTests: XCTestCase {
                      keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
                      event: generateNSEvent(character: character,
                                             characterIgnoringModifiers: characterIgnoringModifier,
@@ -1499,7 +1499,7 @@ index 4a76452..252b1b8 100644
                  )
              }
          } else {
-@@ -4687,7 +5262,8 @@ final class StateMachineTests: XCTestCase {
+@@ -2917,7 +3492,8 @@ final class StateMachineTests: XCTestCase {
                  keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
                  event: generateNSEvent(
                      character: character,
@@ -1509,8 +1509,8 @@ index 4a76452..252b1b8 100644
              )
          }
      }
-@@ -4741,3 +5317,10 @@ final class StateMachineTests: XCTestCase {
-         )!
+@@ -3089,3 +3665,10 @@ fileprivate extension InputMethodEvent {
+         candidateBuffer.removeAll()
      }
  }
 +
