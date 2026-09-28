@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -34,24 +35,35 @@ jobs:
           fi
 
           branch="macskk-$latest"
-          if gh api "repos/$GITHUB_REPOSITORY/branches/$branch" >/dev/null 2>&1; then
-            echo "branch $branch already exists"
+          if [ -n "$(gh pr list --head "$branch" --state all --json number --jq '.[].number')" ]; then
+            echo "a PR for $branch already exists"
             exit 0
+          fi
+
+          # NOTE: A previous run may have pushed the branch and then failed to
+          # open the PR. Reuse that branch instead of giving up on it.
+          if gh api "repos/$GITHUB_REPOSITORY/branches/$branch" >/dev/null 2>&1; then
+            echo "branch $branch already exists, opening the PR for it"
+            open_pr_only=1
+          else
+            open_pr_only=
           fi
 
           # NOTE: A new upstream release resets the patch revision to 1. The
           # sha256 is a placeholder until build.yml writes the real one after
           # this lands on main; the cask is unusable in between, which is fine
           # because that only lasts as long as the merge.
-          sed -i "s|^  version \".*\"$|  version \"$latest,1\"|" "$cask"
-          sed -i "s|^  sha256 \".*\"|  sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"|" "$cask"
-          git diff -- "$cask"
+          if [ -z "$open_pr_only" ]; then
+            sed -i "s|^  version \".*\"$|  version \"$latest,1\"|" "$cask"
+            sed -i "s|^  sha256 \".*\"|  sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"|" "$cask"
+            git diff -- "$cask"
 
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git switch -c "$branch"
-          git commit -am "macSKK $latest"
-          git push origin "$branch"
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git switch -c "$branch"
+            git commit -am "macSKK $latest"
+            git push origin "$branch"
+          fi
 
           gh pr create --base main --head "$branch" \
             --title "macSKK $latest" \
@@ -71,3 +83,8 @@ jobs:
           release and writes the checksum back to main.
           EOF
           )"
+
+          # NOTE: A PR opened with GITHUB_TOKEN does not fire pull_request, so
+          # build.yml would never run on it. workflow_dispatch is exempt from
+          # that rule; its checks land on the branch head and show up in the PR.
+          gh workflow run build.yml --ref "$branch"

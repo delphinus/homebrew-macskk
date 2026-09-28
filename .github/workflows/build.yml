@@ -49,8 +49,9 @@ jobs:
           path: macSKK
 
       # NOTE: This is where a patch that no longer applies shows up, which is
-      # why this job also runs on pull_request. --3way gives a usable rejection
-      # instead of a bare "does not apply".
+      # why this job also runs on pull_request and on the branches upstream.yml
+      # dispatches it for. --3way gives a usable rejection instead of a bare
+      # "does not apply".
       - name: Apply the patch
         working-directory: macSKK
         run: git apply --3way --verbose ../patches/kakutei-undo.patch
@@ -96,7 +97,7 @@ jobs:
           path: macSKK.app.zip
 
       - name: Publish the release
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.cask.outputs.tag }}
@@ -108,7 +109,7 @@ jobs:
           gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber macSKK.app.zip
 
       - name: Write the checksum back into the cask
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
