@@ -11,13 +11,13 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 ## 何を足しているか
 
-**⌃Z で直前の確定を取り消して変換候補選択に戻る** (ddskk の `skk-undo-kakutei` 相当)。確定したときの変換候補が選択された状態で戻るので、そこからスペースで次の変換候補、前候補キーを続ければ読み (▽) まで戻れる。確定した文字列がクライアントに残っていれば、**後ろに続きを入力していても取り消せる**。
+**⌃Z で直前の確定を取り消して変換候補選択に戻る** (ddskk の `skk-undo-kakutei` 相当)。確定したときの変換候補が選択された状態で戻るので、そこからスペースで次の変換候補、前候補キーを続ければ読み (▽) まで戻れる。確定した文字列がクライアントに残っていれば、**後ろに続きを入力していても取り消せる**。補完候補 (ピリオドキー・一定時間後の選択用のキー) や変換候補パネルのダブルクリックから確定した文字列も取り消せる。
 
 `setMarkedText` の `replacementRange` で確定済み文字列を未確定文字列に置き換えている。**macOS 26.0 では無視されていたが 26.6 では届く**ようになった。ただし届くのは AppKit と WebKit のアプリだけで、Chromium ベースのアプリ (Chrome, Slack, Obsidian) とターミナルでは無視される。そちらでは置けたかどうかを読み直して判定し、確定した文字列を次の変換候補で置き換えて変換候補パネルを出すほうに切り替える。
 
 キーバインドのアクション名は `kakuteiUndo`、既定は ⌃Z。macOS の標準のキーバインドでも macSKK の他の機能でも使われていない。
 
-パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel-2.21.0` ブランチ (upstream の main に rebase したもの)。**upstream に提案して取り込まれたらこの tap は畳む。**
+パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` ブランチ (upstream に出す PR のブランチと同じもの)。**upstream に提案して取り込まれたらこの tap は畳む。**
 
 ## 仕組み
 
@@ -29,11 +29,11 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 ## パッチを直したとき
 
-[delphinus/macSKK](https://github.com/delphinus/macSKK) の `fix-candidate-panel-2.21.0` を直したら、この tap にも持ってくる。
+[delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` を直したら、この tap にも持ってくる。
 
 ```sh
 cd <macSKK のチェックアウト>
-git diff 2.21.0..fix-candidate-panel-2.21.0 > <この tap>/patches/kakutei-undo.patch
+git diff 2.21.0..kakutei-undo > <この tap>/patches/kakutei-undo.patch
 ```
 
 そのうえで `Casks/macskk-kakutei-undo.rb` の `version` の**カンマの後ろを 1 つ上げる** (`"2.21.0,1"` → `"2.21.0,2"`)。upstream のリリースは変わっていないので前半は据え置き。
@@ -47,13 +47,13 @@ main に push すると `build.yml` がビルドして release を作り、sha25
 ```sh
 cd <macSKK のチェックアウト>
 git fetch origin --tags
-git switch -c fix-candidate-panel-<新しいタグ> fix-candidate-panel-2.21.0
+git switch kakutei-undo
 git rebase <新しいタグ>
 git diff <新しいタグ>..HEAD > <この tap>/patches/kakutei-undo.patch
-git push fork HEAD
+git push --force-with-lease fork kakutei-undo
 ```
 
-作り直したパッチを PR のブランチに push すれば CI がやり直される。ブランチ名が変わるので、この README の参照も合わせて直す。
+作り直したパッチを PR のブランチに push すれば CI がやり直される。`kakutei-undo` は upstream への PR のブランチも兼ねているので、rebase したら force push する。
 
 ## 二重に入れない
 
