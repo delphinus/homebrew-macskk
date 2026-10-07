@@ -11,13 +11,19 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 ## 何を足しているか
 
-**⌃Z で直前の確定を取り消して変換候補選択に戻る** (ddskk の `skk-undo-kakutei` 相当)。確定したときの変換候補が選択された状態で戻るので、そこからスペースで次の変換候補、前候補キーを続ければ読み (▽) まで戻れる。確定した文字列がクライアントに残っていれば、**後ろに続きを入力していても取り消せる**。補完候補 (ピリオドキー・一定時間後の選択用のキー) や変換候補パネルのダブルクリックから確定した文字列も取り消せる。
+**⌃⇧R で直前の確定を取り消して変換候補選択に戻る** (ddskk の `skk-undo-kakutei` 相当)。確定したときの変換候補が選択された状態で戻るので、そこからスペースで次の変換候補、前候補キーを続ければ読み (▽) まで戻れる。確定した文字列がクライアントに残っていれば、**後ろに続きを入力していても取り消せる**。補完候補 (ピリオドキー・一定時間後の選択用のキー) や変換候補パネルのダブルクリックから確定した文字列も取り消せる。
 
-`setMarkedText` の `replacementRange` で確定済み文字列を未確定文字列に置き換えている。**macOS 26.0 では無視されていたが 26.6 では届く**ようになった。ただし届くのは AppKit と WebKit のアプリだけで、Chromium ベースのアプリ (Chrome, Slack, Obsidian) とターミナルでは無視される。そちらでは置けたかどうかを読み直して判定し、確定した文字列を次の変換候補で置き換えて変換候補パネルを出すほうに切り替える。
+`setMarkedText` の `replacementRange` で確定済み文字列を未確定文字列に置き換えている。**macOS 26.0 では無視されていたが 26.6 では届く**ようになった。アプリごとの結果は次のとおり。
 
-キーバインドのアクション名は `kakuteiUndo`、既定は ⌃Z。macOS の標準のキーバインドでも macSKK の他の機能でも使われていない。
+| 結果 | アプリ |
+|---|---|
+| ▼ に戻る | テキストエディット, Safari, Chrome, Slack, Obsidian |
+| 確定した直後だけ ▼ に戻る | Terminal.app (キャレットの直前で終わる範囲しか置き換えない) |
+| 何もしない | iTerm2 (範囲指定を使わないので無効にしている), WezTerm, Ghostty (文書の中身を見せない) |
 
-パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` ブランチ (upstream に出す PR のブランチと同じもの)。**upstream に提案して取り込まれたらこの tap は畳む。**
+キーバインドのアクション名は `kakuteiUndo`、既定は ⌃⇧R (macOS 標準の日本語入力の再変換と同じ)。
+
+パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` ブランチで、upstream には [mtgto/macSKK#524](https://github.com/mtgto/macSKK/pull/524) として出している。**取り込まれたらこの tap は畳む。**
 
 ## 仕組み
 
@@ -31,9 +37,14 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` を直したら、この tap にも持ってくる。
 
+`kakutei-undo` は PR のブランチなので、リリースのタグではなく **upstream の main の上にある 1 コミット**。タグとの差分を取ると、タグ以降の上流の変更までパッチに入ってしまうので、**そのコミットだけの差分を取り、タグに当たることを確かめる**。
+
 ```sh
 cd <macSKK のチェックアウト>
-git diff 2.21.0..kakutei-undo > <この tap>/patches/kakutei-undo.patch
+git diff kakutei-undo^..kakutei-undo > <この tap>/patches/kakutei-undo.patch
+git worktree add --detach /tmp/macskk-apply <cask のタグ>   # 例: 2.21.0
+git -C /tmp/macskk-apply apply --check <この tap>/patches/kakutei-undo.patch
+git worktree remove /tmp/macskk-apply
 ```
 
 そのうえで `Casks/macskk-kakutei-undo.rb` の `version` の**カンマの後ろを 1 つ上げる** (`"2.21.0,1"` → `"2.21.0,2"`)。upstream のリリースは変わっていないので前半は据え置き。
@@ -42,14 +53,14 @@ main に push すると `build.yml` がビルドして release を作り、sha25
 
 ## upstream に新しいリリースが出たとき
 
-`upstream.yml` が作る PR の CI でパッチが当たらなければ、パッチのブランチを新しいリリースに rebase して作り直す。**`git diff <新しいタグ>..<ブランチ>` は rebase してから取る。** 古いリリースの上にあるブランチとの差分を取ると、上流の変更を打ち消す差分までパッチに入ってしまう。
+`upstream.yml` が作る PR の CI でパッチが当たらなければ、`kakutei-undo` を upstream の最新の main に rebase し、上の「パッチを直したとき」と同じくコミットだけの差分を取り直す。新しいタグに当たらなければ、そのタグの上で衝突を解いたパッチを別に作る。
 
 ```sh
 cd <macSKK のチェックアウト>
 git fetch origin --tags
 git switch kakutei-undo
-git rebase <新しいタグ>
-git diff <新しいタグ>..HEAD > <この tap>/patches/kakutei-undo.patch
+git rebase origin/main
+git diff HEAD^..HEAD > <この tap>/patches/kakutei-undo.patch
 git push --force-with-lease fork kakutei-undo
 ```
 
@@ -90,4 +101,5 @@ LSREG=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchService
 
 - **ad-hoc 署名。** Developer ID の証明書を持っていないため。cask は落としてきたものに quarantine を付けるので、`postflight_steps` で外している。
 - **macOS / Apple Silicon 向けにしかビルドしていない。**
+- **Terminal.app では選べない。** Terminal.app は `~/Library/Input Methods/` に置いた入力メソッドを入力メニューでグレーにする。Terminal.app で使うには `/Library/Input Methods/` に置く必要があり、その場合はこの tap は使えない (置き換えたあとは macOS の再起動も要った)。
 - 辞書・skkserv の設定・コンテナは bundle identifier が同じなので公式版と共通。置き場所を変えても引き継がれる。
