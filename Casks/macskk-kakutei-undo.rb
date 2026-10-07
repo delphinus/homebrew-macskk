@@ -3,7 +3,7 @@ cask "macskk-kakutei-undo" do
   # is the revision of patches/kakutei-undo.patch on top of it. Bumping only the
   # patch does not need an upstream release.
   version "2.21.0,3"
-  sha256 "63c200bad8c774d25459db50f45bd2dba20f83e8cae60181da7a3bf4ab8b852c"
+  sha256 "46738ede40acd0bfd02efd852b75477342c977cd7b69b2747869fc44cd0830ce"
 
   url "https://github.com/delphinus/homebrew-macskk/releases/download/v#{version.before_comma}-#{version.after_comma}/macSKK.app.zip"
   name "macSKK with kakutei undo"
