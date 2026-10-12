@@ -30,19 +30,20 @@ brew install delphinus/macskk/macskk-kakutei-undo
 - 公式 cask は `pkg` で `/Library/Input Methods/` に入れるので **sudo が要る**。この tap は cask の `input_method` スタンザで `~/Library/Input Methods/` に置くので、**インストールも更新も sudo なしで通る**。daily-sync のような無人のジョブから `brew upgrade` するだけで追随できる。
 - upstream の release tarball ではなく、**GitHub Actions で upstream のタグにパッチを当ててビルドしたものを自前の release に置いて配る**。各端末でのビルドは要らない。
 - 上流に新しいリリースが出ると [`upstream.yml`](.github/workflows/upstream.yml) が日次で検知して PR を作る。その PR の CI がパッチを当ててビルドするので、**パッチが当たらなくなったらそこで落ちて気付ける**。
-- main に入ると [`build.yml`](.github/workflows/build.yml) が `macos-26` でビルドして release に上げ、cask に sha256 を書き戻す。
+- main に入ると [`build.yml`](.github/workflows/build.yml) が `xcode-27` のランナー (Xcode 27.0、upstream の CI と同じ) でビルドして release に上げ、cask に sha256 を書き戻す。
 - バージョンは `<upstream のリリース>,<パッチの版>`。パッチだけ直したいときは後ろを上げる。アプリの `MARKETING_VERSION` は upstream の番号のままにしてあるので、macSKK 自身の更新通知は静かなまま。
 
 ## パッチを直したとき
 
 [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` を直したら、この tap にも持ってくる。
 
-`kakutei-undo` は PR のブランチなので、リリースのタグではなく **upstream の main の上にある 1 コミット**。タグとの差分を取ると、タグ以降の上流の変更までパッチに入ってしまうので、**そのコミットだけの差分を取り、タグに当たることを確かめる**。
+`kakutei-undo` は PR のブランチなので、リリースのタグではなく **upstream の main の上にあり、main をマージしながら進む**。タグとの差分を素朴に取ると、ブランチに入っているタグ以降の上流の変更までパッチに入ってしまうことがある。そこで **upstream の main との分岐点からの差分 (`origin/main...kakutei-undo`、PR の差分と同じもの) を取り、タグに当たることを確かめる**。
 
 ```sh
 cd <macSKK のチェックアウト>
-git diff kakutei-undo^..kakutei-undo > <この tap>/patches/kakutei-undo.patch
-git worktree add --detach /tmp/macskk-apply <cask のタグ>   # 例: 2.21.0
+git fetch origin --tags
+git diff origin/main...kakutei-undo > <この tap>/patches/kakutei-undo.patch
+git worktree add --detach /tmp/macskk-apply <cask のタグ>   # 例: 2.21.1
 git -C /tmp/macskk-apply apply --check <この tap>/patches/kakutei-undo.patch
 git worktree remove /tmp/macskk-apply
 ```
@@ -53,18 +54,19 @@ main に push すると `build.yml` がビルドして release を作り、sha25
 
 ## upstream に新しいリリースが出たとき
 
-`upstream.yml` が作る PR の CI でパッチが当たらなければ、`kakutei-undo` を upstream の最新の main に rebase し、上の「パッチを直したとき」と同じくコミットだけの差分を取り直す。新しいタグに当たらなければ、そのタグの上で衝突を解いたパッチを別に作る。
+`upstream.yml` が作る PR は版の前半を上げ、後半を 1 に戻す (`"2.21.0,3"` → `"2.21.1,1"`)。パッチは古いままなので、**その PR のブランチで上の「パッチを直したとき」と同じ手順でパッチを取り直す**。`kakutei-undo` が新しいタグより古い main の上にあるなら、先に upstream の main を `kakutei-undo` にマージする。
 
 ```sh
 cd <macSKK のチェックアウト>
 git fetch origin --tags
 git switch kakutei-undo
-git rebase origin/main
-git diff HEAD^..HEAD > <この tap>/patches/kakutei-undo.patch
-git push --force-with-lease fork kakutei-undo
+git merge origin/main
+git push fork kakutei-undo
 ```
 
-作り直したパッチを PR のブランチに push すれば CI がやり直される。`kakutei-undo` は upstream への PR のブランチも兼ねているので、rebase したら force push する。
+**rebase しない。** `kakutei-undo` は upstream への PR のブランチも兼ねていて、レビュアーもこのブランチに push する。rebase して force push すると、その push を消してしまうし、PR のコメントに書いたコミットのハッシュも変わる。
+
+取り直したパッチを tap の PR のブランチに push すれば CI がやり直される。新しいタグに当たらなければ、そのタグの上で衝突を解いたパッチを別に作る。
 
 ## 二重に入れない
 
