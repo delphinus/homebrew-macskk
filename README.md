@@ -30,7 +30,7 @@ brew install delphinus/macskk/macskk-kakutei-undo
 - 公式 cask は `pkg` で `/Library/Input Methods/` に入れるので **sudo が要る**。この tap は cask の `input_method` スタンザで `~/Library/Input Methods/` に置くので、**インストールも更新も sudo なしで通る**。daily-sync のような無人のジョブから `brew upgrade` するだけで追随できる。
 - upstream の release tarball ではなく、**GitHub Actions で upstream のタグにパッチを当ててビルドしたものを自前の release に置いて配る**。各端末でのビルドは要らない。
 - 上流に新しいリリースが出ると [`upstream.yml`](.github/workflows/upstream.yml) が日次で検知して PR を作る。その PR の CI がパッチを当ててビルドするので、**パッチが当たらなくなったらそこで落ちて気付ける**。
-- main に入ると [`build.yml`](.github/workflows/build.yml) が `macos-26` でビルドして release に上げ、cask に sha256 を書き戻す。
+- main に入ると [`build.yml`](.github/workflows/build.yml) が `xcode-27` のランナー (Xcode 27.0、upstream の CI と同じ) でビルドして release に上げ、cask に sha256 を書き戻す。
 - バージョンは `<upstream のリリース>,<パッチの版>`。パッチだけ直したいときは後ろを上げる。アプリの `MARKETING_VERSION` は upstream の番号のままにしてあるので、macSKK 自身の更新通知は静かなまま。
 
 ## パッチを直したとき
