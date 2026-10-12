@@ -11,41 +11,41 @@ index 73ef1a7..6b3483c 100644
  | 英数キー | 英数 | 直接入力モードに切り替える（JIS配列の英数キー） |
  | かなキー | かな | ひらがなモードに切り替える（JIS配列のかなキー） |
 diff --git a/macSKK.xcodeproj/project.pbxproj b/macSKK.xcodeproj/project.pbxproj
-index 5ad75cf..4e463ba 100644
+index bdf969a..af62f87 100644
 --- a/macSKK.xcodeproj/project.pbxproj
 +++ b/macSKK.xcodeproj/project.pbxproj
-@@ -138,6 +138,7 @@
- 		CEA602AE2F03795D00E605F2 /* ColorEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA602AD2F03795D00E605F2 /* ColorEncoding.swift */; };
- 		CEA602B02F264FC600E605F2 /* KanaRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA602AF2F264FC600E605F2 /* KanaRuleView.swift */; };
- 		CEA78FAA295EBCAC00B67E25 /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */; };
-+		CEB0F1A13000000000000002 /* MockTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0F1A13000000000000001 /* MockTextInput.swift */; };
- 		CEA78FAC2960401F00B67E25 /* String+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAB2960401F00B67E25 /* String+Transform.swift */; };
- 		CEA78FAE2961BA1D00B67E25 /* String+TransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAD2961BA1D00B67E25 /* String+TransformTests.swift */; };
- 		CEA78FB02964209B00B67E25 /* UserDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA78FAF2964209B00B67E25 /* UserDict.swift */; };
-@@ -362,6 +363,7 @@
- 		CEA602AD2F03795D00E605F2 /* ColorEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEncoding.swift; sourceTree = "<group>"; };
- 		CEA602AF2F264FC600E605F2 /* KanaRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaRuleView.swift; sourceTree = "<group>"; };
- 		CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
-+		CEB0F1A13000000000000001 /* MockTextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextInput.swift; sourceTree = "<group>"; };
- 		CEA78FAB2960401F00B67E25 /* String+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Transform.swift"; sourceTree = "<group>"; };
- 		CEA78FAD2961BA1D00B67E25 /* String+TransformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+TransformTests.swift"; sourceTree = "<group>"; };
- 		CEA78FAF2964209B00B67E25 /* UserDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDict.swift; sourceTree = "<group>"; };
-@@ -641,6 +643,7 @@
- 				CEE748812FA6388A00818B33 /* MarkedTextTests.swift */,
- 				CEF0823529685C0800646366 /* StateTests.swift */,
- 				CEA78FA9295EBCAC00B67E25 /* StateMachineTests.swift */,
-+				CEB0F1A13000000000000001 /* MockTextInput.swift */,
- 				CEE2D9782A99FEC700A4CD76 /* CandidateTest.swift */,
- 				CE4CB5CD2AD55DF90046FA34 /* NumberEntryTests.swift */,
- 				CE84A3EC295DA818009394C4 /* MemoryDictTests.swift */,
-@@ -1168,6 +1171,7 @@
- 				CEAB00012E228E2000618E64 /* SKKServDestinationTests.swift in Sources */,
- 				CEADA44D2B025A8A0026E2BD /* EntryTests.swift in Sources */,
- 				CEA78FAA295EBCAC00B67E25 /* StateMachineTests.swift in Sources */,
-+				CEB0F1A13000000000000002 /* MockTextInput.swift in Sources */,
- 				CE496C952B440BBD001C623C /* Data+EucJis2004Tests.swift in Sources */,
- 				CEE2D9792A99FEC700A4CD76 /* CandidateTest.swift in Sources */,
- 				CE1E7BAB2E406B6700C2E410 /* URL+AdditionsTests.swift in Sources */,
+@@ -65,6 +65,7 @@
+ 		CE2573D12F9E557800533A05 /* Data+GzipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2573D02F9E557800533A05 /* Data+GzipTests.swift */; };
+ 		CE2573D32F9E562000533A05 /* SKK-JISYO.test.utf8.gz in Resources */ = {isa = PBXBuildFile; fileRef = CE2573D22F9E562000533A05 /* SKK-JISYO.test.utf8.gz */; };
+ 		CE2573D52F9E566900533A05 /* SKK-JISYO.test.json.gz in Resources */ = {isa = PBXBuildFile; fileRef = CE2573D42F9E566900533A05 /* SKK-JISYO.test.json.gz */; };
++		CE25D7DB307A95290080B25E /* MockTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25D7DA307A95290080B25E /* MockTextInput.swift */; };
+ 		CE2F3B132C030C9A00CE342B /* KeyBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F3B122C030C9A00CE342B /* KeyBindingTests.swift */; };
+ 		CE313A1F2AF5213700A49142 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE313A1E2AF5213700A49142 /* Candidate.swift */; };
+ 		CE39DB212A8DFD8F00BC619F /* MarkedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE39DB202A8DFD8F00BC619F /* MarkedText.swift */; };
+@@ -285,6 +286,7 @@
+ 		CE2573D02F9E557800533A05 /* Data+GzipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+GzipTests.swift"; sourceTree = "<group>"; };
+ 		CE2573D22F9E562000533A05 /* SKK-JISYO.test.utf8.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "SKK-JISYO.test.utf8.gz"; sourceTree = "<group>"; };
+ 		CE2573D42F9E566900533A05 /* SKK-JISYO.test.json.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "SKK-JISYO.test.json.gz"; sourceTree = "<group>"; };
++		CE25D7DA307A95290080B25E /* MockTextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextInput.swift; sourceTree = "<group>"; };
+ 		CE2F3B122C030C9A00CE342B /* KeyBindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindingTests.swift; sourceTree = "<group>"; };
+ 		CE313A1E2AF5213700A49142 /* Candidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
+ 		CE39DB202A8DFD8F00BC619F /* MarkedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedText.swift; sourceTree = "<group>"; };
+@@ -673,6 +675,7 @@
+ 				CE39FA942BEB942B00E293F0 /* Character+KeyCode.swift */,
+ 				CED7CA572A83BFE9004EF988 /* fixture */,
+ 				CE1E7BAA2E406B6700C2E410 /* URL+AdditionsTests.swift */,
++				CE25D7DA307A95290080B25E /* MockTextInput.swift */,
+ 			);
+ 			path = macSKKTests;
+ 			sourceTree = "<group>";
+@@ -1157,6 +1160,7 @@
+ 				CE118EE52CE0B4DE00A7C300 /* KeyTests.swift in Sources */,
+ 				4B8E87D82CE068A0004E7461 /* CurrentInputTests.swift in Sources */,
+ 				CEA2539A2E23DA9000618E64 /* DictSettingTests.swift in Sources */,
++				CE25D7DB307A95290080B25E /* MockTextInput.swift in Sources */,
+ 				CE420WAT2F00000100000002 /* WorkaroundApplicationTests.swift in Sources */,
+ 				CE420SYNC2F00000100000004 /* SettingsSyncTests.swift in Sources */,
+ 				CE84A3ED295DA818009394C4 /* MemoryDictTests.swift in Sources */,
 diff --git a/macSKK/InputController.swift b/macSKK/InputController.swift
 index 99b6855..ce5a176 100644
 --- a/macSKK/InputController.swift
@@ -125,10 +125,10 @@ index 7722b19..182cd51 100644
                  return KeyBinding(action, [Input(key: .character("."), modifierFlags: .shift)])
              case .eisu:
 diff --git a/macSKK/State.swift b/macSKK/State.swift
-index 7244372..14591e2 100644
+index 7244372..20ce500 100644
 --- a/macSKK/State.swift
 +++ b/macSKK/State.swift
-@@ -248,6 +248,11 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
+@@ -248,6 +248,16 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
          return ComposingState(isShift: isShift, text: text, okuri: okuri, romaji: "", cursor: cursor, prevMode: prevMode)
      }
  
@@ -137,10 +137,15 @@ index 7244372..14591e2 100644
 +                              reconvertText: reconvertText, fixedWorkaroundText: fixedWorkaroundText)
 +    }
 +
++    func with(prevMode: InputMode?) -> Self {
++        return ComposingState(isShift: isShift, text: text, okuri: okuri, romaji: romaji, cursor: cursor, prevMode: prevMode,
++                              reconvertText: reconvertText, fixedWorkaroundText: fixedWorkaroundText)
++    }
++
      /**
       * カーソルより左のtext部分を返す。
       * ``trim(kanaRule:)`` と違い、未確定のローマ字部分の変換 ("n" を "ん" にするなど) は行わない。
-@@ -301,7 +306,8 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
+@@ -301,7 +311,8 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
                                    okuri: nil,
                                    romaji: "",
                                    cursor: newCursor,
@@ -151,7 +156,7 @@ index 7244372..14591e2 100644
              return self
          }
 diff --git a/macSKK/StateMachine.swift b/macSKK/StateMachine.swift
-index 61708b0..44cd2f0 100644
+index 7b1995f..b70fe19 100644
 --- a/macSKK/StateMachine.swift
 +++ b/macSKK/StateMachine.swift
 @@ -3,6 +3,7 @@
@@ -196,29 +201,22 @@ index 61708b0..44cd2f0 100644
  
      init(initialState: IMEState = IMEState(), inlineCandidateCount: Int = 3, enableMarkedTextWorkaround: Bool = false) {
          state = initialState
-@@ -471,6 +492,21 @@ final class StateMachine {
+@@ -471,6 +492,14 @@ final class StateMachine {
                  }
              }
              return true
 +        case .kakuteiUndo:
-+            if kakuteiUndo(action: action) {
-+                return true
-+            }
-+            // 取り消せない場合の扱いは割り当てられたキーによって変える。
-+            // デフォルトのCtrl-Shift-rのような修飾キー付きのキーはアプリに渡さず、なにもせずに握り潰す。
++            // 取り消せない場合も、割り当てられたキーはアプリに渡さずなにもせずに握り潰す。
 +            // Ctrl-BackspaceやCtrl-uのように、アプリに渡るとターミナルなどで直前の単語や
 +            // 行が削除されてしまうキーを割り当てられるため
 +            // (ターミナルによっては握り潰してもターミナル側で処理されてしまう)。
-+            // Shift-xのような文字キーは通常の文字入力として扱う。
-+            let modifierFlags = action.event.modifierFlags
-+            if modifierFlags.contains(.control) || modifierFlags.contains(.command) || modifierFlags.contains(.function) {
-+                return true
-+            }
-+            break
++            // 文字キーを割り当てた場合も、取り消せないときにその文字が入力されるよりは何も起きないほうがよい
++            _ = kakuteiUndo(action: action)
++            return true
          case .eisu:
              // 何もしない (OSがIMEの切り替えはしてくれる)
              return true
-@@ -511,6 +547,155 @@ final class StateMachine {
+@@ -511,6 +540,172 @@ final class StateMachine {
          }
      }
  
@@ -356,16 +354,33 @@ index 61708b0..44cd2f0 100644
 +     */
 +    @MainActor private func undoToSelecting(lastFix: LastFix, range: NSRange) {
 +        // 読みまで戻ってキャンセルしたときに元の確定文字列に戻せるよう、再変換と同じく確定文字列を持たせる
++        let composing = lastFix.selecting.prev.composing.with(reconvertText: lastFix.text)
++        // ddskkと同じく、確定したあとにqなどで入力モードを変えていても、ひらがな・カタカナ・半角カナは切り替えずに今のモードのまま戻す。
++        // 変換候補選択からキャンセルするとprev.modeに戻るので、prev.modeも今のモードにしておく。
++        // Abbrevから確定した場合はAbbrevの変換候補選択に戻し、変換を終えたら今のモードに戻るようにする
++        let prev: SelectingState.PrevState
++        if lastFix.selecting.prev.mode == .direct {
++            prev = SelectingState.PrevState(mode: .direct, composing: composing.with(prevMode: state.inputMode))
++        } else {
++            prev = SelectingState.PrevState(mode: state.inputMode, composing: composing)
++        }
 +        let selecting = SelectingState(
-+            prev: SelectingState.PrevState(mode: lastFix.selecting.prev.mode,
-+                                           composing: lastFix.selecting.prev.composing.with(reconvertText: lastFix.text)),
++            prev: prev,
 +            yomi: lastFix.selecting.yomi,
 +            candidates: lastFix.selecting.candidates,
 +            candidateIndex: lastFix.selecting.candidateIndex,
-+            remain: lastFix.selecting.remain,
++            // ▽の途中にカーソルを移動して確定した場合、カーソルより右の読みはすでに入力済みなので引き継がない。
++            // 引き継ぐと確定し直したときに再び▽が始まり、同じ読みが二重に入る
++            remain: nil,
 +            completion: lastFix.selecting.completion,
 +        )
 +        state.inputMethod = .selecting(selecting)
++        // .modeChangedを受けたInputControllerは空文字挿入のワークアラウンドでsetMarkedTextを呼ぶことがあり、
++        // undoFixedTextの後に送ると戻した未確定文字列が上書きされるので、先に送る
++        if state.inputMode != prev.mode {
++            state.inputMode = prev.mode
++            inputMethodEventSubject.send(.modeChanged(prev.mode))
++        }
 +        inputMethodEventSubject.send(.undoFixedText(state.displayText(), replacementRange: range))
 +        self.lastFix = nil
 +        updateCandidates(selecting: selecting)
@@ -374,7 +389,7 @@ index 61708b0..44cd2f0 100644
      /**
       * 状態がnormalのときのprintableイベントのhandle
       *
-@@ -621,11 +806,25 @@ final class StateMachine {
+@@ -621,11 +816,25 @@ final class StateMachine {
              return true
          } else if let input, !event.modifierFlags.contains(.control) {
              if case .candidates(let candidateWords) = completion, let candidate = candidateWords.first, let original = candidate.original {
@@ -400,7 +415,7 @@ index 61708b0..44cd2f0 100644
                      return true
                  }
                  // 補完候補が表示されてから一定時間経過後に確定キーが押された場合は補完候補で確定する
-@@ -634,12 +833,14 @@ final class StateMachine {
+@@ -634,12 +843,14 @@ final class StateMachine {
                     let first = input.lowercased().first,
                     let index = Global.selectCandidateKeys.firstIndex(of: first), index < candidateWords.count, index < Global.displayCandidateCount {
                      let candidate = candidateWords[index]
@@ -415,7 +430,7 @@ index 61708b0..44cd2f0 100644
                      return true
                  }
              }
-@@ -1073,7 +1274,7 @@ final class StateMachine {
+@@ -1073,7 +1284,7 @@ final class StateMachine {
              }
          case .up, .down, .registerPaste, .eisu, .kana, .toggleKana, .reconvert:
              return true
@@ -424,20 +439,43 @@ index 61708b0..44cd2f0 100644
              break
          }
  
-@@ -1362,6 +1563,12 @@ final class StateMachine {
-             } else {
-                 state.inputMethod = .normal
-                 addFixedText(fixedText)
+@@ -1354,14 +1565,25 @@ final class StateMachine {
+             if !fixedText.isEmpty {
+                 addWordToUserDict(yomi: yomi, okuri: okuri, candidate: selecting.candidates[selecting.candidateIndex])
+             }
++            func rememberFix() {
 +                // バックスペースで末尾を削って確定した場合は変換候補と確定文字列が一致しないので確定アンドゥの対象外
 +                if dropLast {
 +                    lastFix = nil
 +                } else {
 +                    rememberLastFix(selecting: selecting, textInput: action.textInput)
 +                }
++            }
+             updateCandidates(selecting: nil)
+             if let remain = selecting.remain {
+                 addFixedText(fixedText)
++                // 残りの読みを未確定文字列として書き込むとキャレットがその後ろに移るので、先に確定した位置を覚える
++                rememberFix()
+                 state.inputMethod = .composing(ComposingState(isShift: true, text: remain, romaji: ""))
+                 updateMarkedText()
+             } else {
+                 state.inputMethod = .normal
+                 addFixedText(fixedText)
++                rememberFix()
                  if let prevMode = selecting.prev.composing.prevMode {
                      state.inputMode = prevMode
                      inputMethodEventSubject.send(.modeChanged(prevMode))
-@@ -1519,7 +1726,7 @@ final class StateMachine {
+@@ -1510,6 +1732,9 @@ final class StateMachine {
+             addWordToUserDict(yomi: selecting.yomi, okuri: selecting.okuri, candidate: selecting.candidates[selecting.candidateIndex])
+             updateCandidates(selecting: nil)
+             addFixedText(selecting.fixedText(dropLast: false))
++            // 接尾辞の入力をやめたときにも確定アンドゥできるようにする。
++            // 接尾辞や残りの読みを未確定文字列として書き込むとキャレットがその後ろに移るので、先に確定した位置を覚える
++            rememberLastFix(selecting: selecting, textInput: action.textInput)
+             if let remain = selecting.remain {
+                 state.inputMethod = .composing(ComposingState(isShift: true, text: remain, romaji: ""))
+                 updateMarkedText()
+@@ -1519,7 +1744,7 @@ final class StateMachine {
              return handle(action)
          case .registerPaste, .delete, .eisu, .kana, .reconvert:
              return true
@@ -446,7 +484,7 @@ index 61708b0..44cd2f0 100644
              break
          case nil:
              break
-@@ -1673,6 +1880,9 @@ final class StateMachine {
+@@ -1673,6 +1898,9 @@ final class StateMachine {
      }
  
      private func addFixedText(_ text: String) {
@@ -456,7 +494,7 @@ index 61708b0..44cd2f0 100644
          if let specialState = state.specialState {
              // state.markedTextを更新してinputMethodEventSubjectにstate.displayText()をsendする
              state.specialState = specialState.appendText(text)
-@@ -1783,7 +1993,11 @@ final class StateMachine {
+@@ -1783,7 +2011,11 @@ final class StateMachine {
      /// StateMachine外で選択されている変換候補が更新されたときに通知される
      func didSelectCandidate(_ candidate: Candidate) {
          if case .selecting(var selecting) = state.inputMethod {
@@ -469,7 +507,7 @@ index 61708b0..44cd2f0 100644
                  selecting.candidateIndex = candidateIndex
                  state.inputMethod = .selecting(selecting)
                  updateMarkedText()
-@@ -1792,12 +2006,19 @@ final class StateMachine {
+@@ -1792,12 +2024,19 @@ final class StateMachine {
      }
  
      /// StateMachine外で選択されている変換候補が二回選択されたときに通知される
@@ -514,47 +552,42 @@ index 9ed5960..478893f 100644
  "KeyBindingActionAffix" = "接頭辞/接尾辞";
  "KeyBindingActionEisu" = "英数キー";
  "KeyBindingActionKana" = "かなキー";
-diff --git a/macSKKTests/KeyBindingSetTests.swift b/macSKKTests/KeyBindingSetTests.swift
-index 4e8fd42..5020fa2 100644
---- a/macSKKTests/KeyBindingSetTests.swift
-+++ b/macSKKTests/KeyBindingSetTests.swift
-@@ -22,6 +22,29 @@ final class KeyBindingSetTests: XCTestCase {
-         XCTAssertEqual(set.sorted.map { $0.1 }, [.enter, .left, .left, .hiragana, .direct, .japanese, .toggleKana, .unregister])
+diff --git a/macSKKTests/KeyBindingTests.swift b/macSKKTests/KeyBindingTests.swift
+index 7d20511..3b73693 100644
+--- a/macSKKTests/KeyBindingTests.swift
++++ b/macSKKTests/KeyBindingTests.swift
+@@ -78,6 +78,11 @@ final class KeyBindingTests: XCTestCase {
+         XCTAssertTrue(inputEnter.accepts(currentInput: currentInputEnter))
+         XCTAssertTrue(inputEnter.accepts(currentInput: currentInputOptionEnter))
+         XCTAssertFalse(inputEnter.accepts(currentInput: currentInputLeft))
++        // 修飾キーを2つ要求する場合は、片方だけでは受け付けない
++        let inputControlShiftR = KeyBinding.Input(key: .character("r"), modifierFlags: [.control, .shift])
++        XCTAssertTrue(inputControlShiftR.accepts(currentInput: CurrentInput(key: .character("r"), modifierFlags: [.control, .shift])))
++        XCTAssertFalse(inputControlShiftR.accepts(currentInput: CurrentInput(key: .character("r"), modifierFlags: .control)))
++        XCTAssertFalse(inputControlShiftR.accepts(currentInput: CurrentInput(key: .character("r"), modifierFlags: .shift)))
      }
  
-+    /// 確定アンドゥのCtrl-Shift-rがCtrl-rやShift-rと取り違えられないこと。
-+    /// Ctrl-Shift-rのInputはoptionalModifierFlagsが空なのでShiftの有無を区別する
-+    func testDefaultActionForKakuteiUndo() {
-+        let set = KeyBindingSet.defaultKeyBindingSet
-+        func action(modifierFlags: NSEvent.ModifierFlags) -> KeyBinding.Action? {
-+            let character = modifierFlags.contains(.shift) ? "R" : "r"
-+            let event = NSEvent.keyEvent(with: .keyDown,
-+                                         location: .zero,
-+                                         modifierFlags: modifierFlags,
-+                                         timestamp: 0,
-+                                         windowNumber: 0,
-+                                         context: nil,
-+                                         characters: character,
-+                                         charactersIgnoringModifiers: character,
-+                                         isARepeat: false,
-+                                         keyCode: 0x0f)!
-+            return set.action(event: event, inputMode: .hiragana, inputMethod: .normal)
-+        }
-+        XCTAssertEqual(action(modifierFlags: [.control, .shift]), .kakuteiUndo)
-+        XCTAssertNotEqual(action(modifierFlags: [.control]), .kakuteiUndo)
-+        XCTAssertNotEqual(action(modifierFlags: [.shift]), .kakuteiUndo)
-+    }
-+
-     func testUpdate() {
-         let set = KeyBindingSet(id: "test", values: [
-             KeyBinding(.toggleKana, [.init(key: .character("q"), modifierFlags: [])]),
+     func testActionAccepts() {
+@@ -100,6 +105,13 @@ final class KeyBindingTests: XCTestCase {
+                                        remain: [],
+                                        completion: false)
+         XCTAssertTrue(KeyBinding.Action.abbrev.accepts(inputMode: .direct, inputMethod: .selecting(selecting)))
++        XCTAssertTrue(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .hiragana, inputMethod: .normal))
++        XCTAssertTrue(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .katakana, inputMethod: .normal))
++        XCTAssertTrue(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .hankaku, inputMethod: .normal))
++        XCTAssertFalse(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .direct, inputMethod: .normal))
++        XCTAssertFalse(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .eisu, inputMethod: .normal))
++        XCTAssertFalse(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .hiragana, inputMethod: .composing(composing)))
++        XCTAssertFalse(KeyBinding.Action.kakuteiUndo.accepts(inputMode: .hiragana, inputMethod: .selecting(selecting)))
+     }
+ 
+     func testIsDefault() {
 diff --git a/macSKKTests/MockTextInput.swift b/macSKKTests/MockTextInput.swift
 new file mode 100644
-index 0000000..d0da9e6
+index 0000000..4fbd0cc
 --- /dev/null
 +++ b/macSKKTests/MockTextInput.swift
-@@ -0,0 +1,149 @@
-+// SPDX-FileCopyrightText: 2026 mtgto <hogerappa@gmail.com>
+@@ -0,0 +1,148 @@
 +// SPDX-License-Identifier: GPL-3.0-or-later
 +
 +import Foundation
@@ -704,49 +737,36 @@ index 0000000..d0da9e6
 +    }
 +}
 diff --git a/macSKKTests/StateMachineTests.swift b/macSKKTests/StateMachineTests.swift
-index 3953859..063efc1 100644
+index 79f5dce..f06e722 100644
 --- a/macSKKTests/StateMachineTests.swift
 +++ b/macSKKTests/StateMachineTests.swift
-@@ -7,7 +7,11 @@ import XCTest
- @testable import macSKK
- 
- final class StateMachineTests: XCTestCase {
-+    /// 確定のやり直しのテストはStateMachineTestContextを使わずに直接イベントを購読するので、その購読を持っておく
-+    var cancellables: Set<AnyCancellable> = []
-+
-     override func setUp() async throws {
-+        cancellables = []
-         await MainActor.run {
-             Global.dictionary.setEntries([:])
-             Global.privateMode.send(false)
-@@ -2795,6 +2799,405 @@ final class StateMachineTests: XCTestCase {
+@@ -2814,6 +2814,453 @@ final class StateMachineTests: XCTestCase {
          XCTAssertEqual(Global.dictionary.recentRegisteredCandidates.first, RecentRegisteredCandidate(yomi: "い", word: Word("伊")))
      }
  
 +    @MainActor func testKakuteiUndo() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都"), Word("徒")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "戸")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼戸", "確定した文字列が未確定文字列に戻る")
 +        XCTAssertEqual(textInput.markedText, "▼戸")
-+        if case .selecting(let selecting) = stateMachine.state.inputMethod {
++        if case .selecting(let selecting) = ctx.stateMachine.state.inputMethod {
 +            XCTAssertEqual(selecting.yomi, "と")
 +            XCTAssertEqual(selecting.candidates[selecting.candidateIndex].word, "戸",
 +                           "確定した変換候補が選択された状態で戻る")
 +        } else {
 +            XCTFail("変換候補選択に戻ること")
 +        }
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ", textInput: textInput)))
++        ctx.step(printableKeyEventAction(character: " "))
 +        XCTAssertEqual(textInput.text, "▼都", "戻ったあとは通常の変換候補選択と同じようにスペースで次の変換候補に進む")
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "都")
 +        XCTAssertEqual(Global.dictionary.refer("と", option: nil), [Word("都"), Word("戸"), Word("徒")],
 +                       "選び直した変換候補が学習される")
@@ -757,18 +777,17 @@ index 3953859..063efc1 100644
 +        Global.showMarkedTextMarker = false
 +        defer { Global.showMarkedTextMarker = true }
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "戸")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "戸", "マーカーを表示しない設定では未確定文字列にもマーカーを付けない")
 +        XCTAssertEqual(textInput.markedText, "戸", "確定した文字列が未確定文字列に戻っている")
-+        if case .selecting = stateMachine.state.inputMethod {} else {
++        if case .selecting = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("変換候補選択に戻ること")
 +        }
 +    }
@@ -776,39 +795,37 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoBackToComposing() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼戸")
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "x", textInput: textInput)))
++        ctx.step(printableKeyEventAction(character: "x"))
 +        XCTAssertEqual(textInput.text, "▽と", "前候補キーを続けると読みまで戻れる")
 +    }
 +
 +    @MainActor func testKakuteiUndoCancelRestoresFixedText() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "a", textInput: textInput)))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(printableKeyEventAction(character: "a"))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼戸あ")
-+        XCTAssertTrue(stateMachine.handle(cancelAction.with(textInput: textInput)))
++        ctx.step(cancelAction)
 +        XCTAssertEqual(textInput.text, "▽とあ", "1回目のキャンセルで読みに戻る")
-+        XCTAssertTrue(stateMachine.handle(cancelAction.with(textInput: textInput)))
++        ctx.step(cancelAction)
 +        XCTAssertEqual(textInput.text, "戸あ", "選択テキストの再変換と同じく、2回目のキャンセルで元の確定文字列に戻る")
 +        XCTAssertEqual(textInput.markedText, "")
 +        XCTAssertEqual(textInput.caret, 1)
-+        if case .normal = stateMachine.state.inputMethod {} else {
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("確定した状態に戻ること")
 +        }
 +    }
@@ -816,20 +833,19 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoCancelRestoresFixedTextWithOkuri() {
 +        Global.dictionary.setEntries(["とr": [Word("取"), Word("撮")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "r", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "u")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: "r", withShift: true))
++        ctx.step(printableKeyEventAction(character: "u"))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "取る")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼取る")
-+        XCTAssertTrue(stateMachine.handle(cancelAction.with(textInput: textInput)))
++        ctx.step(cancelAction)
 +        XCTAssertEqual(textInput.text, "▽とる", "送り仮名は読みに結合される")
-+        XCTAssertTrue(stateMachine.handle(cancelAction.with(textInput: textInput)))
++        ctx.step(cancelAction)
 +        XCTAssertEqual(textInput.text, "取る", "送り仮名も含めて元の確定文字列に戻る")
 +    }
 +
@@ -839,66 +855,157 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoIgnoresSelectingSameCandidate() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
-+        var events: [InputMethodEvent] = []
-+        let cancellable = stateMachine.inputMethodEvent.sink { events.append($0) }
-+        defer { cancellable.cancel() }
-+        stateMachine.didSelectCandidate(Candidate("戸"))
-+        XCTAssertTrue(events.isEmpty, "選択中の変換候補と同じなら未確定文字列を送り直さない")
-+        stateMachine.didSelectCandidate(Candidate("都"))
-+        XCTAssertEqual(textInput.text, "▼都", "別の変換候補が選ばれたときは反映する")
++        let ctx = StateMachineTestContext(textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true), [.composing("t")])
++        ctx.step(printableKeyEventAction(character: "o"), [.composing("と")])
++        ctx.step(printableKeyEventAction(character: " "), [.selecting("戸")])
++        ctx.step(enterAction, [.fixedText("戸")])
++        ctx.step(kakuteiUndoAction, [.undoFixedText(MarkedText([.markerSelect, .emphasized("戸")]), replacementRange: NSRange(location: 0, length: 1))])
++        // 選択中の変換候補と同じなら未確定文字列を送り直さない
++        ctx.stateMachine.didSelectCandidate(Candidate("戸"))
++        ctx.expect([])
++        // 別の変換候補が選ばれたときは反映する
++        ctx.stateMachine.didSelectCandidate(Candidate("都"))
++        ctx.expect([.selecting("都")])
++        XCTAssertEqual(textInput.text, "▼都")
 +    }
 +
 +    @MainActor func testKakuteiUndoAfterMoreInput() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        // 確定したあとに続きを入力する
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "a", textInput: textInput)))
++        ctx.step(printableKeyEventAction(character: "a"))
 +        XCTAssertEqual(textInput.text, "戸あ")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼戸あ", "続きを打った後でも確定した文字列だけが未確定文字列に戻る")
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ", textInput: textInput)))
++        ctx.step(printableKeyEventAction(character: " "))
 +        XCTAssertEqual(textInput.text, "▼都あ")
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "都あ")
 +        XCTAssertEqual(textInput.caret, 1, "キャレットは確定し直した文字列の直後に来る")
++    }
++
++    /// ddskkと同じく、確定したあとに入力モードを変えていたら今のモードのまま変換候補選択に戻す
++    @MainActor func testKakuteiUndoKeepsCurrentInputMode() {
++        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
++
++        let textInput = MockTextInput()
++        let ctx = StateMachineTestContext(textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true), [.composing("t")])
++        ctx.step(printableKeyEventAction(character: "o"), [.composing("と")])
++        ctx.step(printableKeyEventAction(character: " "), [.selecting("戸")])
++        ctx.step(enterAction, [.fixedText("戸")])
++        ctx.step(printableKeyEventAction(character: "q"), [.modeChanged(.katakana)])
++        // 今のモード (カタカナ) のままなので.modeChangedは送られない
++        ctx.step(kakuteiUndoAction, [.undoFixedText(MarkedText([.markerSelect, .emphasized("戸")]), replacementRange: NSRange(location: 0, length: 1))])
++        XCTAssertEqual(ctx.stateMachine.state.inputMode, .katakana)
++        // キャンセルで戻った読みもカタカナで表示する
++        ctx.step(cancelAction, [.composing("ト")])
++        XCTAssertEqual(ctx.stateMachine.state.inputMode, .katakana)
++        ctx.step(printableKeyEventAction(character: " "), [.selecting("戸")])
++        ctx.step(enterAction, [.fixedText("戸")])
++        XCTAssertEqual(ctx.stateMachine.state.inputMode, .katakana, "確定したあともカタカナのまま")
++        XCTAssertEqual(textInput.text, "戸")
++    }
++
++    /// Abbrevから確定した場合はAbbrevの変換候補選択に戻し、確定し直したら今のモードに戻る
++    @MainActor func testKakuteiUndoFromAbbrev() {
++        Global.dictionary.setEntries(["test": [Word("TEST")]])
++
++        let textInput = MockTextInput()
++        let ctx = StateMachineTestContext(textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "/"), [.modeChanged(.direct), .composing()])
++        ctx.step(printableKeyEventAction(character: "t"), [.composing("t")])
++        ctx.step(printableKeyEventAction(character: "e"), [.composing("te")])
++        ctx.step(printableKeyEventAction(character: "s"), [.composing("tes")])
++        ctx.step(printableKeyEventAction(character: "t"), [.composing("test")])
++        ctx.step(printableKeyEventAction(character: " "), [.selecting("TEST")])
++        ctx.step(enterAction, [.fixedText("TEST"), .modeChanged(.hiragana)])
++        ctx.step(printableKeyEventAction(character: "q"), [.modeChanged(.katakana)])
++        ctx.step(kakuteiUndoAction, [.modeChanged(.direct),
++                                     .undoFixedText(MarkedText([.markerSelect, .emphasized("TEST")]), replacementRange: NSRange(location: 0, length: 4))])
++        ctx.step(enterAction, [.fixedText("TEST"), .modeChanged(.katakana)])
++        XCTAssertEqual(ctx.stateMachine.state.inputMode, .katakana, "確定アンドゥしたときのモードに戻る")
++        XCTAssertEqual(textInput.text, "TEST")
++    }
++
++    /// ▽の途中にカーソルを移動して変換し確定した文字列も確定アンドゥできる
++    @MainActor func testKakuteiUndoAfterFixWithCursor() {
++        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")], "え": [Word("絵"), Word("柄")]])
++
++        let textInput = MockTextInput()
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(printableKeyEventAction(character: "e", withShift: true))
++        ctx.step(printableKeyEventAction(character: "i"))
++        ctx.step(leftKeyAction)
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        XCTAssertEqual(textInput.text, "戸絵▽い", "カーソルより右の読みは▽のまま残る")
++        ctx.step(enterAction)
++        XCTAssertEqual(textInput.text, "戸絵い")
++        ctx.step(kakuteiUndoAction)
++        XCTAssertEqual(textInput.text, "戸▼絵い", "前に確定した「戸」ではなく、カーソルを移動して確定した「絵」が戻る")
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        XCTAssertEqual(textInput.text, "戸柄い", "確定し直したときにカーソルより右だった読みを再び入力しない")
++        XCTAssertEqual(textInput.caret, 2)
++    }
++
++    /// 接辞変換で確定した文字列も確定アンドゥできる
++    @MainActor func testKakuteiUndoAfterFixWithAffix() {
++        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")], "あ": [Word("阿"), Word("亜")]])
++
++        let textInput = MockTextInput()
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(printableKeyEventAction(character: "a", withShift: true))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(shiftKey(">", "."))
++        XCTAssertEqual(textInput.text, "戸阿▽>")
++        // 接尾辞の入力をやめる
++        ctx.step(cancelAction)
++        XCTAssertEqual(textInput.text, "戸阿")
++        ctx.step(kakuteiUndoAction)
++        XCTAssertEqual(textInput.text, "戸▼阿", "前に確定した「戸」ではなく、接辞変換の前に確定した「阿」が戻る")
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        XCTAssertEqual(textInput.text, "戸亜")
 +    }
 +
 +    /// Terminal.appはキャレットの直前で終わらない範囲を指定したsetMarkedTextを無視するので、続きを打った後は戻さない
 +    @MainActor func testKakuteiUndoInTerminalOnlyBeforeCaret() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput(bundleIdentifier: "com.apple.Terminal")
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "a", textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(printableKeyEventAction(character: "a"))
 +        XCTAssertEqual(textInput.text, "戸あ")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "戸あ", "続きを打った後は何もしない")
-+        if case .normal = stateMachine.state.inputMethod {} else {
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("状態が変わらないこと")
 +        }
 +        // 続きを消してキャレットの直前に確定した文字列がある状態に戻す
 +        textInput.insertText("", replacementRange: NSRange(location: 1, length: 1))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼戸", "キャレットの直前にあれば戻せる")
 +    }
 +
@@ -906,22 +1013,21 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoInITerm2() {
 +        Global.dictionary.setEntries(["てすと": [Word("TEST")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput(bundleIdentifier: "com.googlecode.iterm2")
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "e")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "s")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "u")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "e"))
++        ctx.step(printableKeyEventAction(character: "s"))
++        ctx.step(printableKeyEventAction(character: "u"))
++        ctx.step(printableKeyEventAction(character: "t"))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "TEST")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)),
-+                      "戻さなくても修飾キー付きのキーはアプリに渡さない")
++        // 戻さなくても修飾キー付きのキーはアプリに渡さない
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "TEST", "キャレットの直前にあっても何もしない")
-+        if case .normal = stateMachine.state.inputMethod {} else {
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("状態が変わらないこと")
 +        }
 +    }
@@ -929,38 +1035,36 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoAfterEditedBeforeFixedText() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        // 確定した文字列より前をmacSKK以外の方法で編集する
 +        textInput.moveCaret(to: 0)
 +        textInput.insertText("あいう", replacementRange: NSRange(location: 0, length: 0))
 +        XCTAssertEqual(textInput.text, "あいう戸")
 +        textInput.moveCaret(to: 4)
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "あいう▼戸", "覚えた位置になくてもキャレットの直前にあれば戻せる")
 +    }
 +
 +    @MainActor func testKakuteiUndoNotFound() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction.with(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
 +        // 確定した文字列をmacSKK以外の方法で別の文字列にする
 +        textInput.insertText("凸", replacementRange: NSRange(location: 0, length: 1))
 +        XCTAssertEqual(textInput.text, "凸")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "凸", "確定した文字列が見つからないときは何もしない")
-+        if case .normal = stateMachine.state.inputMethod {} else {
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("状態が変わらないこと")
 +        }
 +    }
@@ -970,57 +1074,54 @@ index 3953859..063efc1 100644
 +        Global.fixedCompletionByPeriod = true
 +        defer { Global.fixedCompletionByPeriod = fixedCompletionByPeriod }
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "a", withShift: true)))
-+        stateMachine.completion = .candidates([
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "a", withShift: true))
++        ctx.stateMachine.completion = .candidates([
 +            Candidate("朝", original: Candidate.Original(midashi: "あさ", word: "朝")),
 +            Candidate("麻", original: Candidate.Original(midashi: "あさ", word: "麻")),
 +        ])
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: ".", textInput: textInput)))
++        ctx.step(printableKeyEventAction(character: "."))
 +        XCTAssertEqual(textInput.text, "朝")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼朝", "ピリオドキーで補完候補から確定した文字列も未確定文字列に戻る")
-+        if case .selecting(let selecting) = stateMachine.state.inputMethod {
++        if case .selecting(let selecting) = ctx.stateMachine.state.inputMethod {
 +            XCTAssertTrue(selecting.completion, "Tabキーで補完候補を選択したときと同じ状態に戻る")
 +        } else {
 +            XCTFail("変換候補選択に戻ること")
 +        }
-+        XCTAssertTrue(stateMachine.handle(tabAction.with(textInput: textInput)))
++        ctx.step(tabAction)
 +        XCTAssertEqual(textInput.text, "▼麻", "Tabキーで次の補完候補に進む")
-+        XCTAssertTrue(stateMachine.handle(cancelAction.with(textInput: textInput)))
++        ctx.step(cancelAction)
 +        XCTAssertEqual(textInput.text, "▽あ", "キャンセルすると補完する前の読みに戻る")
 +    }
 +
 +    @MainActor func testKakuteiUndoFromCompletionBySelectCandidateKey() {
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "a", withShift: true)))
-+        stateMachine.completion = .candidates([
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "a", withShift: true))
++        ctx.stateMachine.completion = .candidates([
 +            Candidate("朝", original: Candidate.Original(midashi: "あさ", word: "朝")),
 +            Candidate("麻", original: Candidate.Original(midashi: "あさ", word: "麻")),
 +        ])
-+        stateMachine.completionSetAt = Date(timeIntervalSinceNow: -(Global.completionConfirmationTimeLimit + 0.1))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "2", textInput: textInput)))
++        ctx.stateMachine.completionSetAt = Date(timeIntervalSinceNow: -(Global.completionConfirmationTimeLimit + 0.1))
++        ctx.step(printableKeyEventAction(character: "2"))
 +        XCTAssertEqual(textInput.text, "麻")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼麻", "選択用のキーで補完候補から確定した文字列も未確定文字列に戻る")
 +    }
 +
 +    @MainActor func testKakuteiUndoFromDoubleSelectCandidate() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都"), Word("徒")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput()
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        stateMachine.didDoubleSelectCandidate(Candidate("都"), textInput: textInput)
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.stateMachine.didDoubleSelectCandidate(Candidate("都"), textInput: textInput)
 +        XCTAssertEqual(textInput.text, "都")
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "▼都", "変換候補パネルのダブルクリックで確定した文字列も未確定文字列に戻る")
 +    }
 +
@@ -1029,16 +1130,15 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoWhenReplacementRangeIgnored() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        let textInput = MockTextInput(supportsMarkedTextReplacementRange: false)
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)))
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "戸▼戸")
-+        if case .selecting = stateMachine.state.inputMethod {} else {
++        if case .selecting = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("変換候補選択の状態になること")
 +        }
 +    }
@@ -1046,18 +1146,17 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoSwallowsModifiedKey() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        // カーソル位置を返さないクライアントなので取り消せない
 +        let textInput = MockTextInput(supportsSelectedRange: false)
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoAction(textInput: textInput)),
-+                      "取り消せなくても修飾キー付きのキーはアプリに渡さない (Ctrl-Backspaceのようなキーを割り当てた場合にターミナルで単語が削除されてしまうため)")
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        // 取り消せなくても修飾キー付きのキーはアプリに渡さない (Ctrl-Backspaceのようなキーを割り当てた場合にターミナルで単語が削除されてしまうため)
++        ctx.step(kakuteiUndoAction)
 +        XCTAssertEqual(textInput.text, "戸")
-+        if case .normal = stateMachine.state.inputMethod {} else {
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
 +            XCTFail("状態が変わらないこと")
 +        }
 +    }
@@ -1065,110 +1164,114 @@ index 3953859..063efc1 100644
 +    @MainActor func testKakuteiUndoWithCharacterKeyNotUndoable() {
 +        Global.dictionary.setEntries(["と": [Word("戸"), Word("都")]])
 +
-+        let stateMachine = StateMachine(initialState: IMEState(inputMode: .hiragana))
 +        // カーソル位置を返さないクライアントなので取り消せない
 +        let textInput = MockTextInput(supportsSelectedRange: false)
-+        connect(stateMachine, to: textInput)
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "t", withShift: true)))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: "o")))
-+        XCTAssertTrue(stateMachine.handle(printableKeyEventAction(character: " ")))
-+        XCTAssertTrue(stateMachine.handle(enterAction))
-+        XCTAssertTrue(stateMachine.handle(kakuteiUndoCharacterAction(textInput: textInput)))
-+        XCTAssertEqual(textInput.text, "戸▽x", "取り消せないときは文字キーを通常の文字入力として扱う (末尾の▽xはxの未確定文字列)")
-+        if case .composing(let composing) = stateMachine.state.inputMethod {
-+            XCTAssertEqual(composing.romaji, "x")
-+        } else {
-+            XCTFail("通常の文字入力として扱われること")
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "t", withShift: true))
++        ctx.step(printableKeyEventAction(character: "o"))
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        // 取り消せなくても文字キーはアプリに渡さず、文字も入力しない
++        ctx.step(kakuteiUndoCharacterAction)
++        XCTAssertEqual(textInput.text, "戸")
++        if case .normal = ctx.stateMachine.state.inputMethod {} else {
++            XCTFail("状態が変わらないこと")
 +        }
 +    }
 +
-+    /// InputControllerがクライアントに書き込む処理を模倣する
-+    @MainActor private func connect(_ stateMachine: StateMachine, to textInput: MockTextInput) {
-+        let notFoundRange = NSRange(location: NSNotFound, length: NSNotFound)
-+        stateMachine.inputMethodEvent.sink { event in
-+            switch event {
-+            case .fixedText(let text):
-+                textInput.insertText(text, replacementRange: notFoundRange)
-+            case .markedText(let markedText):
-+                textInput.setMarkedText(Self.string(of: markedText),
-+                                        selectionRange: notFoundRange,
-+                                        replacementRange: notFoundRange)
-+            case .undoFixedText(let markedText, let replacementRange):
-+                textInput.setMarkedText(Self.string(of: markedText),
-+                                        selectionRange: notFoundRange,
-+                                        replacementRange: replacementRange)
-+            case .modeChanged:
-+                break
-+            }
-+        }.store(in: &cancellables)
-+    }
-+
-+    /// InputControllerがクライアントに渡すのと同じ未確定文字列を求める
-+    @MainActor private static func string(of markedText: MarkedText) -> String {
-+        NSAttributedString(markedText.attributedString(Global.showMarkedTextMarker)).string
-+    }
-+
 +    // Ctrl-Shift-rを押した (デフォルトのキー割り当て。normalのときは確定アンドゥ)
-+    private func kakuteiUndoAction(textInput: MockTextInput) -> Action {
++    var kakuteiUndoAction: Action {
 +        Action(keyBind: .kakuteiUndo,
-+               event: generateNSEvent(character: "\u{12}", characterIgnoringModifiers: "R", modifierFlags: [.control, .shift]),
-+               textInput: textInput)
++               event: generateNSEvent(character: "\u{12}", characterIgnoringModifiers: "R", modifierFlags: [.control, .shift]))
 +    }
 +
 +    // kakuteiUndoに文字キー (Shift-x) を割り当てた場合
-+    private func kakuteiUndoCharacterAction(textInput: MockTextInput) -> Action {
++    var kakuteiUndoCharacterAction: Action {
 +        Action(keyBind: .kakuteiUndo,
-+               event: generateNSEvent(character: "X", characterIgnoringModifiers: "x", modifierFlags: [.shift]),
-+               textInput: textInput)
++               event: generateNSEvent(character: "X", characterIgnoringModifiers: "x", modifierFlags: [.shift]))
 +    }
 +
      // Ctrl-jを押した
      var hiraganaAction: Action {
          Action(keyBind: .hiragana, event: generateNSEvent(character: "j", characterIgnoringModifiers: "j", modifierFlags: .control))
-@@ -2896,7 +3299,7 @@ final class StateMachineTests: XCTestCase {
-         printableKeyEventAction(character: char, characterIgnoringModifier: base, withShift: true)
-     }
+@@ -3036,6 +3483,7 @@ fileprivate extension InputMethodEvent {
+     let stateMachine: StateMachine
  
--    private func printableKeyEventAction(character: Character, characterIgnoringModifier: Character? = nil, withShift: Bool = false) -> Action {
-+    private func printableKeyEventAction(character: Character, characterIgnoringModifier: Character? = nil, withShift: Bool = false, textInput: MockTextInput? = nil) -> Action {
-         let characterIgnoringModifiers = characterIgnoringModifier ?? character
-         if withShift {
-             if let characterIgnoringModifier {
-@@ -2904,12 +3307,14 @@ final class StateMachineTests: XCTestCase {
-                     keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
-                     event: generateNSEvent(character: character,
-                                            characterIgnoringModifiers: characterIgnoringModifier,
--                                           modifierFlags: [.shift])
-+                                           modifierFlags: [.shift]),
-+                    textInput: textInput
-                 )
-             } else {
-                 return Action(
-                     keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
--                    event: generateKeyEventWithShift(character: character)
-+                    event: generateKeyEventWithShift(character: character),
-+                    textInput: textInput
-                 )
-             }
-         } else {
-@@ -2917,7 +3322,8 @@ final class StateMachineTests: XCTestCase {
-                 keyBind: keyBind(character: characterIgnoringModifiers, withShift: withShift),
-                 event: generateNSEvent(
-                     character: character,
--                    characterIgnoringModifiers: characterIgnoringModifier ?? character)
-+                    characterIgnoringModifiers: characterIgnoringModifier ?? character),
-+                textInput: textInput
-             )
-         }
-     }
-@@ -3089,3 +3495,10 @@ fileprivate extension InputMethodEvent {
+     private let verifying: Set<Channel>
++    private let textInput: MockTextInput?
+     private var cancellables: Set<AnyCancellable> = []
+     private var inputMethodBuffer: [InputMethodEvent] = []
+     private var yomiBuffer: [YomiEvent] = []
+@@ -3044,17 +3492,23 @@ fileprivate extension InputMethodEvent {
+     /// - Parameters:
+     ///   - verifying: `step` で厳密に検証するイベント。ここに含めたイベントは `step` の引数と完全一致することを検証する
+     ///                (引数を省略した場合は「そのキーでは何も流れない」ことの検証になる)。
++    ///   - textInput: 指定した場合は `step` で送るActionにこのクライアントを付け、
++    ///                `inputMethodEvent` をInputControllerと同じようにこのクライアントに書き込む。
+     init(inputMode: InputMode = .hiragana,
+          verifying: Set<Channel> = [.inputMethod],
+-         enableMarkedTextWorkaround: Bool = false) {
++         enableMarkedTextWorkaround: Bool = false,
++         textInput: MockTextInput? = nil) {
+         stateMachine = StateMachine(initialState: IMEState(inputMode: inputMode))
+         stateMachine.enableMarkedTextWorkaround = enableMarkedTextWorkaround
+         self.verifying = verifying
++        self.textInput = textInput
+         // yomiEvent, candidateEvent には removeDuplicates が挟まっており、その状態は購読ごとに持たれる。
+         // stepごとに購読しなおすと重複除去がリセットされて本番と挙動が変わってしまうため、
+         // 検証対象でないイベントも含めて購読はテスト全体で1回だけ行う。
+-        stateMachine.inputMethodEvent.sink { [weak self] in self?.inputMethodBuffer.append($0) }
+-            .store(in: &cancellables)
++        stateMachine.inputMethodEvent.sink { [weak self] event in
++            self?.inputMethodBuffer.append(event)
++            self?.apply(event)
++        }.store(in: &cancellables)
+         stateMachine.yomiEvent.sink { [weak self] in self?.yomiBuffer.append($0) }
+             .store(in: &cancellables)
+         stateMachine.candidateEvent.sink { [weak self] in self?.candidateBuffer.append($0) }
+@@ -3078,6 +3532,8 @@ fileprivate extension InputMethodEvent {
+               candidate: [(Candidates?) -> Void] = [],
+               file: StaticString = #filePath,
+               line: UInt = #line) -> Bool {
++        // InputControllerは常にクライアントを付けてActionを送るので、それに合わせる
++        let action = textInput.map { action.with(textInput: $0) } ?? action
+         let result = stateMachine.handle(action)
+         XCTAssertEqual(result, returns, "handle()の戻り値", file: file, line: line)
+         expect(inputMethod, yomi: yomi, candidate: candidate, file: file, line: line)
+@@ -3107,4 +3563,36 @@ fileprivate extension InputMethodEvent {
+         yomiBuffer.removeAll()
          candidateBuffer.removeAll()
      }
- }
++
++    /// InputControllerがクライアントに書き込む処理を模倣する
++    private func apply(_ event: InputMethodEvent) {
++        guard let textInput else { return }
++        let notFoundRange = NSRange(location: NSNotFound, length: NSNotFound)
++        switch event {
++        case .fixedText(let text):
++            textInput.insertText(text, replacementRange: notFoundRange)
++        case .markedText(let markedText):
++            textInput.setMarkedText(Self.string(of: markedText),
++                                    selectionRange: notFoundRange,
++                                    replacementRange: notFoundRange)
++        case .undoFixedText(let markedText, let replacementRange):
++            textInput.setMarkedText(Self.string(of: markedText),
++                                    selectionRange: notFoundRange,
++                                    replacementRange: replacementRange)
++        case .modeChanged:
++            break
++        }
++    }
++
++    /// InputControllerがクライアントに渡すのと同じ未確定文字列を求める
++    private static func string(of markedText: MarkedText) -> String {
++        NSAttributedString(markedText.attributedString(Global.showMarkedTextMarker)).string
++    }
++}
 +
 +extension Action {
-+    /// クライアントを指定したActionを返す。確定のやり直し中の操作のようにIMKTextInputが要るテストで使う
++    /// クライアントを指定したActionを返す
 +    func with(textInput: MockTextInput) -> Action {
 +        Action(keyBind: keyBind, event: event, textInput: textInput, treatAsAlphabet: treatAsAlphabet)
 +    }
-+}
+ }
