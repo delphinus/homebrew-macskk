@@ -1,13 +1,14 @@
 cask "macskk-kakutei-undo" do
   # NOTE: before_comma is the upstream release this is built from, after_comma
-  # is the revision of patches/kakutei-undo.patch on top of it. Bumping only the
-  # patch does not need an upstream release.
-  version "2.21.1,1"
+  # is the revision of patches/*.patch on top of it. Bumping only the patches
+  # does not need an upstream release. The token keeps its original name so that
+  # existing installs keep upgrading, even though it carries more than one patch.
+  version "2.21.1,2"
   sha256 "f5307d1578f85e7cd00028ffd1d39d4b0714708b8e186848dc8663c3471a589c"
 
   url "https://github.com/delphinus/homebrew-macskk/releases/download/v#{version.before_comma}-#{version.after_comma}/macSKK.app.zip"
   name "macSKK with kakutei undo"
-  desc "Japanese input method (SKK) with a kakutei undo patch that is not upstream yet"
+  desc "Japanese input method (SKK) with patches that are not upstream yet"
   homepage "https://github.com/mtgto/macSKK"
 
   depends_on macos: :ventura

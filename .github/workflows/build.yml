@@ -53,10 +53,17 @@ jobs:
       # NOTE: This is where a patch that no longer applies shows up, which is
       # why this job also runs on pull_request and on the branches upstream.yml
       # dispatches it for. --3way gives a usable rejection instead of a bare
-      # "does not apply".
-      - name: Apply the patch
+      # "does not apply". Every patch in patches/ is applied in name order, so
+      # dropping one that upstream has merged is just deleting the file.
+      - name: Apply the patches
         working-directory: macSKK
-        run: git apply --3way --verbose ../patches/kakutei-undo.patch
+        run: |
+          set -euo pipefail
+          for patch in ../patches/*.patch; do
+            echo "::group::$patch"
+            git apply --3way --verbose "$patch"
+            echo "::endgroup::"
+          done
 
       - name: Select Xcode
         run: sudo xcode-select -s '/Applications/Xcode_27.0.app/Contents/Developer'
@@ -107,7 +114,7 @@ jobs:
           set -euo pipefail
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 ||
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" \
-              --notes "macSKK ${{ steps.cask.outputs.upstream }} with patches/kakutei-undo.patch (revision ${{ steps.cask.outputs.revision }}), built ad-hoc signed."
+              --notes "macSKK ${{ steps.cask.outputs.upstream }} with $(cd patches && ls *.patch | paste -sd ' ' -) (revision ${{ steps.cask.outputs.revision }}), built ad-hoc signed."
           gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber macSKK.app.zip
 
       - name: Write the checksum back into the cask
