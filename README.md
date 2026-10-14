@@ -25,6 +25,14 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 パッチの実体は [`patches/kakutei-undo.patch`](patches/kakutei-undo.patch)。由来は [delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` ブランチで、upstream には [mtgto/macSKK#524](https://github.com/mtgto/macSKK/pull/524) として出している。**取り込まれたらこの tap は畳む。**
 
+ほかに、upstream に出していてまだ取り込まれていない修正も当てている。取り込まれたらパッチを消す。
+
+| パッチ | 内容 | ブランチ | upstream の PR |
+|---|---|---|---|
+| [`patches/input-mode-panel-spaces.patch`](patches/input-mode-panel-spaces.patch) | 操作スペースを切り替えると入力モードパネルが表示されないことがある問題を直す | `fix-input-mode-panel-spaces` | [mtgto/macSKK#529](https://github.com/mtgto/macSKK/pull/529) |
+
+`build.yml` は `patches/*.patch` を名前の順に全部当てる。
+
 ## 仕組み
 
 - 公式 cask は `pkg` で `/Library/Input Methods/` に入れるので **sudo が要る**。この tap は cask の `input_method` スタンザで `~/Library/Input Methods/` に置くので、**インストールも更新も sudo なしで通る**。daily-sync のような無人のジョブから `brew upgrade` するだけで追随できる。
@@ -35,7 +43,7 @@ brew install delphinus/macskk/macskk-kakutei-undo
 
 ## パッチを直したとき
 
-[delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` を直したら、この tap にも持ってくる。
+[delphinus/macSKK](https://github.com/delphinus/macSKK) の `kakutei-undo` を直したら、この tap にも持ってくる。上の表のほかのパッチも、ブランチの名前を読み替えて同じ手順で取り直す。
 
 `kakutei-undo` は PR のブランチなので、リリースのタグではなく **upstream の main の上にあり、main をマージしながら進む**。タグとの差分を素朴に取ると、ブランチに入っているタグ以降の上流の変更までパッチに入ってしまうことがある。そこで **upstream の main との分岐点からの差分 (`origin/main...kakutei-undo`、PR の差分と同じもの) を取り、タグに当たることを確かめる**。
 

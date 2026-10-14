@@ -125,10 +125,10 @@ index 7722b19..182cd51 100644
                  return KeyBinding(action, [Input(key: .character("."), modifierFlags: .shift)])
              case .eisu:
 diff --git a/macSKK/State.swift b/macSKK/State.swift
-index 7244372..20ce500 100644
+index 7244372..2c4bc8c 100644
 --- a/macSKK/State.swift
 +++ b/macSKK/State.swift
-@@ -248,6 +248,16 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
+@@ -248,6 +248,22 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
          return ComposingState(isShift: isShift, text: text, okuri: okuri, romaji: "", cursor: cursor, prevMode: prevMode)
      }
  
@@ -142,10 +142,16 @@ index 7244372..20ce500 100644
 +                              reconvertText: reconvertText, fixedWorkaroundText: fixedWorkaroundText)
 +    }
 +
++    /// カーソルより右の部分を取り除く
++    func dropRemain() -> Self {
++        return ComposingState(isShift: isShift, text: subText(), okuri: okuri, romaji: romaji, cursor: nil, prevMode: prevMode,
++                              reconvertText: reconvertText, fixedWorkaroundText: fixedWorkaroundText)
++    }
++
      /**
       * カーソルより左のtext部分を返す。
       * ``trim(kanaRule:)`` と違い、未確定のローマ字部分の変換 ("n" を "ん" にするなど) は行わない。
-@@ -301,7 +311,8 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
+@@ -301,7 +317,8 @@ struct ComposingState: Equatable, MarkedTextProtocol, CursorProtocol {
                                    okuri: nil,
                                    romaji: "",
                                    cursor: newCursor,
@@ -155,8 +161,27 @@ index 7244372..20ce500 100644
          } else {
              return self
          }
+@@ -438,6 +455,18 @@ struct SelectingState: Equatable, MarkedTextProtocol {
+         )
+     }
+ 
++    /// カーソルより右の読みを取り除く
++    func dropRemain() -> Self {
++        return SelectingState(
++            prev: PrevState(mode: prev.mode, composing: prev.composing.dropRemain()),
++            yomi: yomi,
++            candidates: candidates,
++            candidateIndex: candidateIndex,
++            remain: nil,
++            completion: completion,
++        )
++    }
++
+     /// 現在選択されている変換候補を文字列を返す
+     func fixedText(dropLast: Bool) -> String {
+         let text = candidates[candidateIndex].word
 diff --git a/macSKK/StateMachine.swift b/macSKK/StateMachine.swift
-index 7b1995f..b70fe19 100644
+index 7b1995f..59ba3e6 100644
 --- a/macSKK/StateMachine.swift
 +++ b/macSKK/StateMachine.swift
 @@ -3,6 +3,7 @@
@@ -243,7 +268,9 @@ index 7b1995f..b70fe19 100644
 +        } else {
 +            location = nil
 +        }
-+        lastFix = LastFix(selecting: selecting, location: location, text: fixedText)
++        // ▽の途中にカーソルを移動して確定した場合、カーソルより右の読みはすでに入力済みなので覚えない。
++        // 覚えると確定アンドゥして確定し直したときやキャンセルしたときに、同じ読みが二重に入る
++        lastFix = LastFix(selecting: selecting.dropRemain(), location: location, text: fixedText)
 +    }
 +
 +    /**
@@ -369,9 +396,7 @@ index 7b1995f..b70fe19 100644
 +            yomi: lastFix.selecting.yomi,
 +            candidates: lastFix.selecting.candidates,
 +            candidateIndex: lastFix.selecting.candidateIndex,
-+            // ▽の途中にカーソルを移動して確定した場合、カーソルより右の読みはすでに入力済みなので引き継がない。
-+            // 引き継ぐと確定し直したときに再び▽が始まり、同じ読みが二重に入る
-+            remain: nil,
++            remain: lastFix.selecting.remain,
 +            completion: lastFix.selecting.completion,
 +        )
 +        state.inputMethod = .selecting(selecting)
@@ -737,10 +762,10 @@ index 0000000..4fbd0cc
 +    }
 +}
 diff --git a/macSKKTests/StateMachineTests.swift b/macSKKTests/StateMachineTests.swift
-index 79f5dce..f06e722 100644
+index 79f5dce..7cb8717 100644
 --- a/macSKKTests/StateMachineTests.swift
 +++ b/macSKKTests/StateMachineTests.swift
-@@ -2814,6 +2814,453 @@ final class StateMachineTests: XCTestCase {
+@@ -2814,6 +2814,476 @@ final class StateMachineTests: XCTestCase {
          XCTAssertEqual(Global.dictionary.recentRegisteredCandidates.first, RecentRegisteredCandidate(yomi: "い", word: Word("伊")))
      }
  
@@ -960,6 +985,29 @@ index 79f5dce..f06e722 100644
 +        ctx.step(enterAction)
 +        XCTAssertEqual(textInput.text, "戸柄い", "確定し直したときにカーソルより右だった読みを再び入力しない")
 +        XCTAssertEqual(textInput.caret, 2)
++    }
++
++    /// ▽の途中にカーソルを移動して確定した文字列を確定アンドゥして読みまで戻ったとき、カーソルより右の読みは含めない
++    @MainActor func testKakuteiUndoAfterFixWithCursorCancel() {
++        Global.dictionary.setEntries(["え": [Word("絵"), Word("柄")]])
++
++        let textInput = MockTextInput()
++        let ctx = StateMachineTestContext(verifying: [], textInput: textInput)
++        ctx.step(printableKeyEventAction(character: "e", withShift: true))
++        ctx.step(printableKeyEventAction(character: "i"))
++        ctx.step(leftKeyAction)
++        ctx.step(printableKeyEventAction(character: " "))
++        ctx.step(enterAction)
++        ctx.step(enterAction)
++        XCTAssertEqual(textInput.text, "絵い")
++        ctx.step(kakuteiUndoAction)
++        XCTAssertEqual(textInput.text, "▼絵い")
++        ctx.step(cancelAction)
++        XCTAssertEqual(textInput.text, "▽えい", "カーソルより右だった「い」はすでに入力済みなので読みに含めない")
++        XCTAssertEqual(textInput.markedText, "▽え")
++        ctx.step(cancelAction)
++        XCTAssertEqual(textInput.text, "絵い", "読みからキャンセルすると元の確定文字列に戻る")
++        XCTAssertEqual(textInput.caret, 1)
 +    }
 +
 +    /// 接辞変換で確定した文字列も確定アンドゥできる
@@ -1194,7 +1242,7 @@ index 79f5dce..f06e722 100644
      // Ctrl-jを押した
      var hiraganaAction: Action {
          Action(keyBind: .hiragana, event: generateNSEvent(character: "j", characterIgnoringModifiers: "j", modifierFlags: .control))
-@@ -3036,6 +3483,7 @@ fileprivate extension InputMethodEvent {
+@@ -3036,6 +3506,7 @@ fileprivate extension InputMethodEvent {
      let stateMachine: StateMachine
  
      private let verifying: Set<Channel>
@@ -1202,7 +1250,7 @@ index 79f5dce..f06e722 100644
      private var cancellables: Set<AnyCancellable> = []
      private var inputMethodBuffer: [InputMethodEvent] = []
      private var yomiBuffer: [YomiEvent] = []
-@@ -3044,17 +3492,23 @@ fileprivate extension InputMethodEvent {
+@@ -3044,17 +3515,23 @@ fileprivate extension InputMethodEvent {
      /// - Parameters:
      ///   - verifying: `step` で厳密に検証するイベント。ここに含めたイベントは `step` の引数と完全一致することを検証する
      ///                (引数を省略した場合は「そのキーでは何も流れない」ことの検証になる)。
@@ -1229,7 +1277,7 @@ index 79f5dce..f06e722 100644
          stateMachine.yomiEvent.sink { [weak self] in self?.yomiBuffer.append($0) }
              .store(in: &cancellables)
          stateMachine.candidateEvent.sink { [weak self] in self?.candidateBuffer.append($0) }
-@@ -3078,6 +3532,8 @@ fileprivate extension InputMethodEvent {
+@@ -3078,6 +3555,8 @@ fileprivate extension InputMethodEvent {
                candidate: [(Candidates?) -> Void] = [],
                file: StaticString = #filePath,
                line: UInt = #line) -> Bool {
@@ -1238,7 +1286,7 @@ index 79f5dce..f06e722 100644
          let result = stateMachine.handle(action)
          XCTAssertEqual(result, returns, "handle()の戻り値", file: file, line: line)
          expect(inputMethod, yomi: yomi, candidate: candidate, file: file, line: line)
-@@ -3107,4 +3563,36 @@ fileprivate extension InputMethodEvent {
+@@ -3107,4 +3586,36 @@ fileprivate extension InputMethodEvent {
          yomiBuffer.removeAll()
          candidateBuffer.removeAll()
      }

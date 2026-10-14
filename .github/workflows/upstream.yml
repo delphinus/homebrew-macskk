@@ -70,8 +70,8 @@ jobs:
             --body "$(cat <<EOF
           Upstream released [$latest](https://github.com/mtgto/macSKK/releases/tag/$latest).
 
-          The CI on this PR applies \`patches/kakutei-undo.patch\` to that tag and
-          builds it, so **if the patch no longer applies, this is where it shows
+          The CI on this PR applies \`patches/*.patch\` to that tag and
+          builds it, so **if a patch no longer applies, this is where it shows
           up**. Rebase the patch branch of
           [delphinus/macSKK](https://github.com/delphinus/macSKK) (named in
           README.md) onto $latest and regenerate the patch from it; see
